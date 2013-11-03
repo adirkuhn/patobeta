@@ -1,0 +1,4 @@
+pato:
+    resource: "@PatoBundle/Resources/config/routing.yml"
+    prefix:   /
+

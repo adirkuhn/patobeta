@@ -1,0 +1,144 @@
+{% extends 'PatoBundle:Default:index.html.twig' %}
+
+{% block title %}
+    Cadastro de Empresas
+{% endblock %}
+
+{% block bodyLeft %}
+
+    <div id="acoes-topo" class="wrapper">
+        <button class="btn btn-large btn-warning" onclick="location.href='{{ path('pato_empresa_homepage') }}'">Voltar</button>
+        <div class="clearfix"></div>
+    </div>
+
+    <hr>
+    <h1>Cadastro de Empresa</h1>
+
+    <div class="row-fluid">
+        <div class="span12">
+            <div class="widget">
+                <div class="widget-header">
+                    <div class="mini-title">
+                        campos marcados com * são obrigatótios
+                    </div>
+                </div>
+                
+                <div class="widget-body">
+                    {{ form(form) }}
+                    <br/><br/>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a id="clienteSalvo" href="#modalClienteSalvo" role="button" data-toggle="modal" data-original-title=""></a>
+    <div id="modalClienteSalvo" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                ×
+            </button>
+            <h3 id="myModalLabel">
+                Cliente salvo com sucesso.
+            </h3>
+        </div>
+<!--         <div class="modal-body">
+            <p>
+            One fine body…
+            </p>
+        </div> -->
+        <div class="modal-footer">
+            <a href="{{ path('pato_cliente_homepage') }}" class="btn btn-warning">
+                Voltar para listagem
+            </a>
+            <a id="clienteSalvoVer" href="" class="btn">
+                Ver Cliente
+            </a>
+            <a href="{{ path('pato_cliente_novo') }}" class="btn btn-primary">
+                Adicionar novo
+            </a>
+        </div>
+    </div>
+
+    <a id="clienteSalvoErro" href="#modalClienteSalvoErro" role="button" data-toggle="modal" data-original-title=""></a>
+    <div id="modalClienteSalvoErro" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                ×
+            </button>
+            <h3 id="myModalLabel">
+                Erro ao salvar cliente.
+            </h3>
+        </div>
+        <div class="modal-body">
+            <p>
+            Verifique se preencheu todos os campos obrigatórios corretamente.
+            </p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">
+                Fechar
+            </button>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block addScript %}
+    <script src="{{ asset('bundles/pato/js/jquery.dataTables.js') }}">
+    </script>
+{% endblock %}
+
+{% block addScripts %}
+
+function salvarCliente() {
+    console.log('salvando cliente');
+
+    console.log($("form").serializeArray());
+
+    $.post("{{ path('pato_cliente_post') }}", $("form").serializeArray(), function(a){
+        console.log(a.id);
+        console.log('sucesso do krl');
+        $("#clienteSalvoVer").attr("href", "{{ path('pato_cliente_get_view') }}/" + a.id);
+        $("#clienteSalvo").click();
+    })
+    .fail(function(){
+        console.log('Erro ao salvar cliente');
+        $("#clienteSalvoErro").click();
+    });
+}
+
+function carregaCidades(estado) {
+    console.log('00000000');
+    console.log(estado.currentTarget.value);
+
+    estado = parseInt(estado.currentTarget.value);
+
+    if (estado > 0) {
+        $("#empresas_cidade option").remove();
+        $("#empresas_cidade").append(
+            $("<option></option>")
+                .text('Selecione uma Cidade')
+                .val(0)
+        );
+
+        $.getJSON("{{ path('pato_cidades_por_estado_get') }}/" + estado, function(data) {
+            //preenche com as cidades cadastrados
+            $.each(data, function(index, item){
+                $("#empresas_cidade").append(
+                    $("<option></option>")
+                        .text(item.cidade)
+                        .val(item.id)
+                );
+            });
+            $("#empresas_cidade").removeAttr("disabled");
+        })
+        .fail(function() { window.alert('Erro! Selecione outro estado'); $("#empresas_cidade").attr("disabled", "disabled") })   
+        ;
+    }
+}
+
+$(document).ready(
+    $('#empresas_estado').on('change', carregaCidades)
+);
+
+{% endblock %}

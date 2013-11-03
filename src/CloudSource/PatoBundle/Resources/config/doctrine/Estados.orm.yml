@@ -1,0 +1,30 @@
+CloudSource\PatoBundle\Entity\Estados:
+    type: entity
+    table: estados
+    fields:
+        id:
+            id: true
+            type: integer
+            unsigned: true
+            nullable: false
+            generator:
+                strategy: IDENTITY
+        estado:
+            type: string
+            length: 45
+            fixed: false
+            nullable: true
+    manyToOne:
+        pais:
+            targetEntity: Paises
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                pais:
+                    referencedColumnName: id
+            orphanRemoval: false
+    uniqueConstraints:
+        estado_pais_idx:
+            columns: estado, pais
+    lifecycleCallbacks: {  }

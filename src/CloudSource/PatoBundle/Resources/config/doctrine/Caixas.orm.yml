@@ -1,0 +1,33 @@
+CloudSource\PatoBundle\Entity\Caixas:
+    type: entity
+    table: caixas
+    repositoryClass: CloudSource\PatoBundle\Entity\CaixasRepository
+    fields:
+        id:
+            id: true
+            type: integer
+            unsigned: true
+            nullable: false
+            generator:
+                strategy: IDENTITY
+        nome:
+            type: string
+            length: 100
+            fixed: false
+            nullable: false
+        descricao:
+            type: string
+            length: 255
+            fixed: false
+            nullable: false
+        criado:
+            type: datetime
+            nullable: false
+        excluido:
+            type: datetime
+            nullable: true
+    oneToMany:
+        caixaMovimentos:
+            targetEntity: CaixasMovimentos
+            mappedBy: caixa
+    lifecycleCallbacks: {  }

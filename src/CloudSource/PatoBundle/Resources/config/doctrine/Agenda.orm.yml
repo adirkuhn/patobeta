@@ -1,0 +1,12 @@
+CloudSource\PatoBundle\Entity\Agenda:
+    type: entity
+    table: agenda
+    fields:
+        id:
+            id: true
+            type: integer
+            unsigned: true
+            nullable: false
+            generator:
+                strategy: IDENTITY
+    lifecycleCallbacks: {  }

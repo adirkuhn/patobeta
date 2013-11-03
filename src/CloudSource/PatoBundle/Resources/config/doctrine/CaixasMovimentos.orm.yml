@@ -1,0 +1,46 @@
+CloudSource\PatoBundle\Entity\CaixasMovimentos:
+    type: entity
+    table: caixas_movimentos
+    repositoryClass: CloudSource\PatoBundle\Entity\CaixasMovimentosRepository
+    fields:
+        id:
+            id: true
+            type: integer
+            unsigned: true
+            nullable: false
+            generator:
+                strategy: IDENTITY
+        criado:
+            type: datetime
+            nullable: false
+        descricao:
+            type: string
+            length: 255
+            nullable: true
+        excluido:
+            type: datetime
+            nullable: true
+        dtMovimento:
+            type: datetime
+            nullable: false
+            column: dt_movimento
+        valor:
+            type: float
+            nullable: true
+    manyToOne:
+        caixa:
+            targetEntity: Caixas
+            inversedBy: caixaMovimentos
+            joinColumn:
+                name: caixa
+                referencedColumnName: id
+        caixaMovimentoTipo:
+            targetEntity: CaixasMovimentosTipos
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                caixa_movimento_tipo:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

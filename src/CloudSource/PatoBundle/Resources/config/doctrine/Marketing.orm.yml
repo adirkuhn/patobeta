@@ -1,0 +1,12 @@
+CloudSource\PatoBundle\Entity\Marketing:
+    type: entity
+    table: marketing
+    fields:
+        id:
+            id: true
+            type: integer
+            unsigned: true
+            nullable: false
+            generator:
+                strategy: IDENTITY
+    lifecycleCallbacks: {  }

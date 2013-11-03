@@ -1,0 +1,17 @@
+CloudSource\PatoBundle\Entity\ClientesTipos:
+    type: entity
+    table: clientes_tipos
+    fields:
+        id:
+            id: true
+            type: integer
+            unsigned: true
+            nullable: false
+            generator:
+                strategy: IDENTITY
+        tipo:
+            type: string
+            length: 100
+            fixed: false
+            nullable: false
+    lifecycleCallbacks: {  }

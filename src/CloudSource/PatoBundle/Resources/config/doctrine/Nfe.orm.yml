@@ -1,0 +1,12 @@
+CloudSource\PatoBundle\Entity\Nfe:
+    type: entity
+    table: nfe
+    fields:
+        id:
+            id: true
+            type: integer
+            unsigned: true
+            nullable: false
+            generator:
+                strategy: IDENTITY
+    lifecycleCallbacks: {  }

@@ -1,0 +1,283 @@
+{% extends 'PatoBundle:Default:index.html.twig' %}
+
+{% block bodyLeft %}
+
+<div class="row-fluid">
+    <div class="span12">
+        <div class="navbar">
+            <div class="navbar-inner">
+                <a class="brand">Caixa: </a>
+                <form name="selecionaCaixa">
+                    <select name="caixa">
+                        {% for caixa in caixas %}
+                            <option value="{{ caixa.id }}">{{ caixa.nome }}</option>
+                        {% endfor %}
+                    </select>
+                </form>
+                <div class="clear"></div>
+            </div>
+
+            <br/>
+
+            <div class="navbar-inner">
+                <a class="brand" href="#" data-original-title=""> Meses </a>
+
+                <ul class="nav">
+                    <li {% if (mes == "01") %} class="active" {% endif %}>
+                        <a href="{{ path('pato_caixa_homepage', { 'caixa': caixaSelecionado.id, 'mes': '01' }) }}" data-original-title=""> Jan </a>
+                    </li>
+                    <li {% if (mes == "02") %} class="active" {% endif %}>
+                        <a href="{{ path('pato_caixa_homepage', { 'caixa': caixaSelecionado.id, 'mes': '02' }) }}" data-original-title=""> Fev </a>
+                    </li>
+                    <li {% if (mes == "03") %} class="active" {% endif %}>
+                        <a href="{{ path('pato_caixa_homepage', { 'caixa': caixaSelecionado.id, 'mes': '03' }) }}" data-original-title=""> Mar </a> 
+                    </li>
+                    <li {% if (mes == "04") %} class="active" {% endif %}>
+                        <a href="{{ path('pato_caixa_homepage', { 'caixa': caixaSelecionado.id, 'mes': '04' }) }}" data-original-title=""> Abr </a>
+                    </li>
+                    <li {% if (mes == "05") %} class="active" {% endif %}>
+                        <a href="{{ path('pato_caixa_homepage', { 'caixa': caixaSelecionado.id, 'mes': '05' }) }}" data-original-title=""> Mai </a>
+                    </li>
+                    <li {% if (mes == "06") %} class="active" {% endif %}>
+                        <a href="{{ path('pato_caixa_homepage', { 'caixa': caixaSelecionado.id, 'mes': '06' }) }}" data-original-title=""> Jun </a>
+                    </li>
+                    <li  {% if (mes == "07") %} class="active" {% endif %}>
+                        <a href="{{ path('pato_caixa_homepage', { 'caixa': caixaSelecionado.id, 'mes': '07' }) }}" data-original-title=""> Jul </a>
+                    </li>
+                    <li  {% if (mes == "08") %} class="active" {% endif %}>
+                        <a href="{{ path('pato_caixa_homepage', { 'caixa': caixaSelecionado.id, 'mes': '08' }) }}" data-original-title=""> Ago </a>
+                    </li>
+                    <li  {% if (mes == "09") %} class="active" {% endif %}>
+                        <a href="{{ path('pato_caixa_homepage', { 'caixa': caixaSelecionado.id, 'mes': '09' }) }}" data-original-title=""> Set </a>
+                    </li>
+                    <li {% if (mes == "10") %} class="active" {% endif %}>
+                        <a href="{{ path('pato_caixa_homepage', { 'caixa': caixaSelecionado.id, 'mes': '10' }) }}" data-original-title=""> Out </a>
+                    </li>
+                    <li {% if (mes == "11") %} class="active" {% endif %}>
+                        <a href="{{ path('pato_caixa_homepage', { 'caixa': caixaSelecionado.id, 'mes': '11' }) }}" data-original-title=""> Nov </a>
+                    </li>
+                    <li {% if (mes == "12") %} class="active" {% endif %}>
+                        <a href="{{ path('pato_caixa_homepage', { 'caixa': caixaSelecionado.id, 'mes': '12' }) }}" data-original-title=""> Dez </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="acoes-topo" class="wrapper">
+    <a class="btn btn-large btn-info" href="#modalNovaEntrada" role="button" data-toggle="modal" data-original-title="">Nova Entrada</a>
+    <button class="btn btn-large btn-danger" onclick="">Nova Saída</button>
+    <br><br>
+    <div class="clearfix"></div>
+</div>
+
+<div class="row-fluid">
+    <div class="span12">
+        <div class="widget">
+            <div class="widget-header">
+                <div class="title">
+                    Caixa: {{ caixaSelecionado.nome }}
+                </div>
+                <span class="tools">
+                    <a class="fs1" aria-hidden="true" data-icon="" data-original-title=""></a>
+                </span>
+            </div>
+            
+            <div class="widget-body">
+
+                <table class="table table-condensed table-striped table-bordered table-hover no-margin">
+                    <thead>
+                        <tr>
+                            <th style="width:10%">
+                                No.
+                            </th>
+                            <th style="width:15%">
+                                Data
+                            </th>
+                            <th style="width:30%" class="hidden-phone">
+                                Descrição
+                            </th>
+                            <th style="width:10%" class="hidden-phone">
+                                VAT
+                            </th>
+                            <th style="width:10%" class="hidden-phone">
+                                Valor
+                          </th>
+                          <th style="width:15%" class="hidden-phone">
+                            Actions
+                          </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for movimento in caixaSelecionado.caixaMovimentos %}
+                            <tr>
+                                <td>
+                                    #{{ movimento.id }}
+                                </td>
+                                <td>
+                                    {{ movimento.dtMovimento|date("d/m/Y") }}
+                                </td>
+                                <td class="hidden-phone">
+                                    {{ movimento.descricao }}
+                                </td>
+                                <td class="hidden-phone">
+                                    <span class="label label label-info">
+                                    {{ movimento.caixaMovimentoTipo.movimentoTipo }}
+                                    </span>
+                                </td>
+                                <td>
+                                    {{ movimento.valor|number_format(2, ',', '.') }}
+                                </td>
+                                <td class="hidden-phone">
+                                    <!-- <a href="#" class="btn btn-warning2 btn-mini" data-original-title="">
+                                        View
+                                    </a> -->
+                                    <a href="#" class="btn btn-info btn-mini" data-original-title="">
+                                        Editar
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            <tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            <tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td><strong>Entradas:</strong></td>
+                                <td>999999</td>
+                                <td></td>
+                            <tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td><strong><font color="red">Saidas:</font></strong></td>
+                                <td><font color="red">999999</font></td>
+                                <td></td>
+                            <tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+ <div id="modalNovaEntrada" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalNovaEntrada" aria-hidden="true" style="display: none;">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            ×
+        </button>
+        <h3 id="myModalLabel">
+            Nova Entrada
+        </h3>
+    </div>
+    <div class="modal-body">
+        <form name="novaEntrada" id="novaEntrada">
+            <input name="caixa" type="hidden" value="{{ caixaSelecionado.id }}" />
+            <div class="control-group">
+                <label class="control-label" for="descricao">
+                  Descrição:
+                </label>
+                <div class="controls">
+                  <input type="text" name="descricao" id="descricao" class="span4" placeholder="Descrição da entrada">
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label" for="valor">
+                  Valor:
+                </label>
+                <div class="controls">
+                  <input type="text" name="valor" id="valor" class="span2" placeholder="Valor da entrada">
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label" for="data">
+                  Data:
+                </label>
+                <div class="controls">
+                  <input type="text" name="data" id="data" class="span2 date_picker" placeholder="{{ "now"|date('d/m/Y') }}" value="{{ "now"|date('d/m/Y') }}">
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true" id="btnModalCancelaEntrada">
+            Cancelar
+        </button>
+
+        <button class="btn btn-success" id="btnModalSalvaEntrada" onclick="salvaEntrada()">
+            Salvar
+        </button>
+    </div>
+</div>
+
+<a id="entradaSalva" href="#modalEntradaSalva" role="button" data-toggle="modal" data-original-title=""></a>
+<div id="modalEntradaSalva" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            ×
+        </button>
+        <h3 id="myModalLabel">
+            Entrada salva com sucesso.
+        </h3>
+    </div>
+<!--         <div class="modal-body">
+        <p>
+        One fine body…
+        </p>
+    </div> -->
+    <div class="modal-footer">
+        <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">
+            Certo, fechar
+        </button>
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block addScript %}
+    <script src="{{ asset('bundles/pato/js/date-picker/date.js') }}">
+    </script>
+{% endblock %}
+
+{% block addScripts %}
+
+function salvaEntrada() {
+    console.log('salvando entrada');
+
+    console.log($("form#novaEntrada").serializeArray());
+
+   $.post("{{ path('pato_caixa_entrada_post') }}", $("form#novaEntrada").serializeArray(), function(a){
+        console.log(a.id);
+        console.log('sucesso do krl');
+        $("#btnModalCancelaEntrada").click();
+        $("#entradaSalva").click();
+
+    })
+    .fail(function(){
+        console.log('Erro ao salvar entrada');
+
+    });
+ 
+}
+
+{% endblock %}

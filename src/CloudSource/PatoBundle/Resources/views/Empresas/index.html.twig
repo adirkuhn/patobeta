@@ -1,0 +1,63 @@
+{% extends 'PatoBundle:Default:index.html.twig' %}
+
+{% block bodyLeft %}
+
+    <div id="acoes-topo" class="wrapper">
+        <button class="btn btn-large btn-info" onclick="location.href='{{ path('pato_empresa_nova') }}'">Nova Empresa</button>
+        <div class="clearfix"></div>
+    </div>
+
+<br><br>
+
+    <div class="row-fluid">
+        <div class="span24">
+            <div class="widget">
+                <div class="widget-header">
+                    <div class="title">
+                        Clientes
+                    </div>
+                    <span class="tools">
+                      <a class="fs1" aria-hidden="true" data-icon="&#xe090;"></a>
+                    </span>
+                </div>
+                
+                <div class="widget-body">
+                    <div id="" class="">
+                        <table class="table table-condensed table-striped table-hover table-bordered pull-left" id="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Empresa</th>
+                                    <th>Email</th>
+                                    <th>Site</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for empresa in empresas %}
+                                    <tr onclick="window.ver({{ empresa.id }})">
+                                        <td>{{ empresa.nomeFantasia }}</td>
+                                        <td>{{ empresa.email }}</td>
+                                        <td>{{ empresa.site }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        <div class="clearfix">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block addScript %}
+    <script src="{{ asset('bundles/pato/js/jquery.dataTables.js') }}">
+    </script>
+{% endblock %}
+
+{% block addScripts %}
+var ver = function(id) {
+    window.location.href = "{{ path('pato_empresa_ver') }}/" + id;
+}
+{% endblock %}

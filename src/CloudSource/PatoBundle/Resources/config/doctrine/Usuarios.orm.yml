@@ -1,0 +1,33 @@
+CloudSource\PatoBundle\Entity\Usuarios:
+    type: entity
+    table: usuarios
+    fields:
+        id:
+            id: true
+            type: integer
+            unsigned: true
+            nullable: false
+            generator:
+                strategy: IDENTITY
+        nome:
+            type: string
+            length: 100
+            fixed: false
+            nullable: false
+        email:
+            type: string
+            length: 100
+            fixed: false
+            nullable: false
+            unique: true
+        senha:
+            type: string
+            length: 100
+            fixed: false
+            nullable: false
+        salt:
+            type: string
+            length: 45
+            fixed: false
+            nullable: false
+    lifecycleCallbacks: {  }
