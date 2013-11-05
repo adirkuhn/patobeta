@@ -166,10 +166,20 @@ pato_caixa_entrada_post:
     defaults: { _controller: PatoBundle:Caixas:entrada }
     methods: [POST]
 
+pato_caixa_movimento_post:
+    pattern: /caixa/movimento
+    defaults: { _controller: PatoBundle:Caixas:movimento }
+    methods: [POST]
+
 pato_caixa_homepage:
     pattern: /caixa/{caixa}/{mes}
     defaults: { _controller: PatoBundle:Caixas:index, caixa: 0, mes:0 }
     methods: [GET]
     requirements:
         caixa: \d+
+
+pato_caixa_tipos_movimentos:
+    pattern: /caixa/tiposmovimento/{tipoMovimento}
+    defaults: { _controller: PatoBundle:CaixasMovimentosTipos:tiposMovimento, tipoMovimento: 'todos' }
+    methods: [GET]
 

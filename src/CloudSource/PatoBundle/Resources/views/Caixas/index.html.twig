@@ -66,8 +66,8 @@
 </div>
 
 <div id="acoes-topo" class="wrapper">
-    <a class="btn btn-large btn-info" href="#modalNovaEntrada" role="button" data-toggle="modal" data-original-title="">Nova Entrada</a>
-    <button class="btn btn-large btn-danger" onclick="">Nova Saída</button>
+    <a id="btNovaEntrada" class="btn btn-large btn-info" href="#modalNovaEntrada" role="button" data-toggle="modal" data-original-title="">Nova Entrada</a>
+    <a id="btNovaSaida" class="btn btn-large btn-danger" href="#modalNovaSaida" role="button" data-toggle="modal" data-original-title="">Nova Saída</a>
     <br><br>
     <div class="clearfix"></div>
 </div>
@@ -99,7 +99,7 @@
                                 Descrição
                             </th>
                             <th style="width:10%" class="hidden-phone">
-                                VAT
+                                Tipo
                             </th>
                             <th style="width:10%" class="hidden-phone">
                                 Valor
@@ -122,7 +122,11 @@
                                     {{ movimento.descricao }}
                                 </td>
                                 <td class="hidden-phone">
-                                    <span class="label label label-info">
+                                    {% if movimento.caixaMovimentoTipo.tipo == 1 %}
+                                        <span class="label label label-info">
+                                    {% else %}
+                                        <span class="label label label-warning">
+                                    {% endif %}
                                     {{ movimento.caixaMovimentoTipo.movimentoTipo }}
                                     </span>
                                 </td>
@@ -200,6 +204,16 @@
             </div>
 
             <div class="control-group">
+                <label class="control-label" for="tipo">
+                  Tipo:
+                </label>
+                <div class="controls">
+                  <select name="tipo">
+                  </select>
+                </div>
+            </div>
+
+            <div class="control-group">
                 <label class="control-label" for="valor">
                   Valor:
                 </label>
@@ -223,7 +237,7 @@
             Cancelar
         </button>
 
-        <button class="btn btn-success" id="btnModalSalvaEntrada" onclick="salvaEntrada()">
+        <button class="btn btn-success" id="btnModalSalvaEntrada" onclick="salvaMovimento('Entrada')">
             Salvar
         </button>
     </div>
@@ -251,6 +265,84 @@
     </div>
 </div>
 
+ <div id="modalNovaSaida" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalNovaSaida" aria-hidden="true" style="display: none;">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            ×
+        </button>
+        <h3 id="myModalLabel">
+            Nova Saida
+        </h3>
+    </div>
+    <div class="modal-body">
+        <form name="novaSaida" id="novaSaida">
+            <input name="caixa" type="hidden" value="{{ caixaSelecionado.id }}" />
+            <div class="control-group">
+                <label class="control-label" for="descricao">
+                  Descrição:
+                </label>
+                <div class="controls">
+                  <input type="text" name="descricao" id="descricao" class="span4" placeholder="Descrição da saída">
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label" for="tipo">
+                  Tipo:
+                </label>
+                <div class="controls">
+                  <select name="tipo">
+                  </select>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label" for="valor">
+                  Valor:
+                </label>
+                <div class="controls">
+                  <input type="text" name="valor" id="valor" class="span2" placeholder="Valor da saída">
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label" for="data">
+                  Data:
+                </label>
+                <div class="controls">
+                  <input type="text" name="data" id="data" class="span2 date_picker" placeholder="{{ "now"|date('d/m/Y') }}" value="{{ "now"|date('d/m/Y') }}">
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true" id="btnModalCancelaSaida">
+            Cancelar
+        </button>
+
+        <button class="btn btn-success" id="btnModalSalvaEntrada" onclick="salvaMovimento('Saida')">
+            Salvar
+        </button>
+    </div>
+</div>
+
+<a id="movimento" href="#modalMovimentoSalva" role="button" data-toggle="modal" data-original-title=""></a>
+<div id="modalMovimentoSalva" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            ×
+        </button>
+        <h3 id="myModalLabel">
+            Movimento salvo.
+        </h3>
+    </div>
+    <div class="modal-footer">
+        <button onclick="window.location.href=window.location.href"class="btn btn-primary" data-dismiss="modal" aria-hidden="true">
+            Certo, fechar
+        </button>
+    </div>
+</div>
+
 
 {% endblock %}
 
@@ -261,16 +353,16 @@
 
 {% block addScripts %}
 
-function salvaEntrada() {
-    console.log('salvando entrada');
+function salvaMovimento(form) {
+    console.log('salvando movimento');
 
-    console.log($("form#novaEntrada").serializeArray());
+    console.log($('#nova'+form).serializeArray());
 
-   $.post("{{ path('pato_caixa_entrada_post') }}", $("form#novaEntrada").serializeArray(), function(a){
+   $.post("{{ path('pato_caixa_movimento_post') }}", $("form#nova"+form).serializeArray(), function(a){
         console.log(a.id);
         console.log('sucesso do krl');
-        $("#btnModalCancelaEntrada").click();
-        $("#entradaSalva").click();
+        $("#btnModalCancela"+form).click();
+        $("#movimento").click();
 
     })
     .fail(function(){
@@ -279,5 +371,56 @@ function salvaEntrada() {
     });
  
 }
+
+function carregaTipoMovimento() {
+
+    $('#modalNovaSaida form select option').remove();
+    $('#modalNovaEntrada form select option').remove();
+
+    var select1 = $('#modalNovaSaida form select');
+    var select2 = $('#modalNovaEntrada form select');
+
+    $.getJSON("{{ path('pato_caixa_tipos_movimentos') }}/saida", function(data) {
+        $.each(data, function(index, item){
+            select1.append(
+                $("<option></option>")
+                    .text(item.movimentoTipo)
+                    .val(item.id)
+            );
+        });
+     
+    })
+    .fail(function() { window.alert('Erro o carregar tipos de movimento'); });
+
+    $.getJSON("{{ path('pato_caixa_tipos_movimentos') }}/entrada", function(data) {
+    $.each(data, function(index, item){
+        select2.append(
+            $("<option></option>")
+                .text(item.movimentoTipo)
+                .val(item.id)
+        );
+    });
+     
+    })
+    .fail(function() { window.alert('Erro o carregar tipos de movimento'); });
+}
+
+$('#btNovaSaida').click(function(){
+    //limpa form
+   $('#modalNovaSaida form').each(function(){
+        this.reset();
+   });
+});
+
+$('#btNovaEntrada').click(function(){
+    //limpa form
+   $('#modalNovaEntrada form').each(function(){
+        this.reset();
+   });
+});
+
+$(document).ready(function() {
+    carregaTipoMovimento()
+});
 
 {% endblock %}

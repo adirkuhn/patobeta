@@ -77,34 +77,31 @@ class CaixasController extends Controller
     }
 
     /**
-     * Grava uma nova entrada no caixa
+     * Grava umo novo movimento no caixa
      *
-     * @author Adir Kuhn <adirkuhn@gmail.com
+     * @author Adir Kuhn <adirkuhn@gmail.com>
      * 
-     * @return mixed[] Id e dados da nova entrada
+     * @return mixed[] Id e dados do novo movimento
      **/
-    public function entradaAction()
+    public function movimentoAction()
     {
-        //pega dados do post e sanitiza
-        $post = array_map('addslashes', $this->getRequest()->request->all());
+        $post = $this->getRequest()->request->all();
 
         if ( array_key_exists('descricao', $post) && !empty($post['descricao']) &&
              array_key_exists('valor', $post) && !empty($post['valor']) &&
              array_key_exists('data', $post) && !empty($post['data']) &&
-             array_key_exists('caixa', $post) && !empty($post['caixa'])) 
+             array_key_exists('caixa', $post) && !empty($post['caixa']) && 
+             array_key_exists('tipo', $post) && !empty($post['tipo']) 
+            ) 
         {
 
             //pega repositorio de dados
             $em = $this->getDoctrine()->getEntityManager();
 
-            //verifica se esta sendo passado tipo de movimento, caso não seta movimento padrão
-            //e busca o tipo de movimento
-            $tipoMovimento = 1; //TIPO 1 == entrada
-            if ( array_key_exists('tipoMovimento', $post) && !empty($post['tipoMovimento']) ) {
-                $tipoMovimento = $post['tipoMovimento'];
-            }
-            $tipoMovimento = $em->find('PatoBundle:CaixasMovimentosTipos', $tipoMovimento);
+            //seta tipo de movimento
+            $tipoMovimento = $em->find('PatoBundle:CaixasMovimentosTipos', $post['tipo']);
             if ( !$tipoMovimento instanceof CaixasMovimentosTipos) {
+
                 return $this->resposta(
                     array('erro' => 'Não foi possivel encontrar o tipo de movimento.'),
                     404
@@ -120,32 +117,32 @@ class CaixasController extends Controller
             //converter , para .
             $valor = $post['valor'];
 
-            $entrada = new CaixasMovimentos();
-            $entrada->setCriado(new \Datetime('now'));
+            $movimento = new CaixasMovimentos();
+            $movimento->setCriado(new \Datetime('now'));
 
-            $entrada->setDescricao($post['descricao']);
-            $entrada->setCaixa($em->getRepository('PatoBundle:Caixas')->find($post['caixa']));
-            $entrada->setCaixaMovimentoTipo($tipoMovimento);
+            $movimento->setDescricao($post['descricao']);
+            $movimento->setCaixa($em->getRepository('PatoBundle:Caixas')->find($post['caixa']));
+            $movimento->setCaixaMovimentoTipo($tipoMovimento);
 
-            $entrada->setValor($valor);
-            $entrada->setDtMovimento(new \Datetime($data));
+            $movimento->setValor($valor);
+            $movimento->setDtMovimento(new \Datetime($data));
 
             //TODO: Precisa ser feito a associacao com o usuario logado
             //para saber quem esta gravando no momento
             try {
                 //salva
-                $em->persist($entrada);
+                $em->persist($movimento);
                 $em->flush();
 
                 //define resposta
-                $post['id'] = $entrada->getId();
+                $post['id'] = $movimento->getId();
 
                 return $this->resposta($post, 200);
 
             } catch (\Doctrine\DBAL\DBALException $e) {
 
                     return $this->resposta(
-                        array('erro' => 'Erro ao salvar nova entrada em caixa.'),
+                        array('erro' => 'Erro ao salvar movimento em caixa.'),
                         409
                     );
             }
