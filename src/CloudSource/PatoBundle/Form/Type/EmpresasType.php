@@ -81,7 +81,10 @@ class EmpresasType extends AbstractType
 
             ->add('cancelar', 'button', array(
                 'label' => 'Cancelar',
-                'attr' => array('class' => 'btn btn-warning btn-large pull-left')
+                'attr' => array(
+                    'class' => 'btn btn-warning btn-large pull-left',
+                    'onclick' => 'window.history.back();'
+                )
             ))
 
             ->add('salvar', 'submit', array(
