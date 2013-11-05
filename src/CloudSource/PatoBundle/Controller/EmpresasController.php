@@ -65,7 +65,7 @@ class EmpresasController extends Controller
 
         if ($form->isValid()) {
 
-            $em = $this->getDoctrine()->getEntityManager();
+            $em = $this->getDoctrine()->getManager();
 
             try {
                 $empresa = $form->getData();
@@ -97,7 +97,7 @@ class EmpresasController extends Controller
     public function verAction($id)
     {
 
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         $empresa = $em->find('PatoBundle:Empresas', $id);
 
@@ -121,7 +121,7 @@ class EmpresasController extends Controller
     public function editarAction($id)
     {
 
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         $empresa = $em->find('PatoBundle:Empresas', $id);
 
@@ -155,7 +155,7 @@ class EmpresasController extends Controller
      **/
     public function editarAtualizarAction($id, Request $request)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         $empresa = $em->find('PatoBundle:Empresas', $id);
 
@@ -214,7 +214,7 @@ class EmpresasController extends Controller
         $id = (int) $id;
 
         //pega repositorio de dados
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         //busca empresa
         $cliente = null;
@@ -258,7 +258,7 @@ class EmpresasController extends Controller
         $page = (int) $page;
 
         //pega repositorio de dados
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         $query = $em->createQuery('
             SELECT
@@ -311,7 +311,7 @@ class EmpresasController extends Controller
         if (array_key_exists('nomeFantasia', $post)) {
 
             //pega repositorio de dados
-            $em = $this->getDoctrine()->getEntityManager();
+            $em = $this->getDoctrine()->getManager();
 
             $empresa = new Empresas();
 
@@ -377,7 +377,7 @@ class EmpresasController extends Controller
         $nome = addslashes($nome);
 
         //pega repositorio de dados
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         //busca empresa
         $cliente = null;
