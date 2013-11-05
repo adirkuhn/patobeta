@@ -108,3 +108,25 @@
     </div>
 
 {% endblock %}
+
+{% block bodyRight %}
+    <div class="wrapper">
+        <h3>Contatos</h3>
+        <ul class="month-income">
+            {% for empregado in empresa.empregados %}
+                <li onclick="window.location.href='{{ path('pato_cliente_get_view', { 'id': empregado.id }) }}';">
+                    <span class="icon-block blue-block">
+                        <b class="fs1" aria-hidden="true" data-icon=""></b>
+                    </span>
+                    <h5>
+                        {{ empregado.nome }}
+                        <small class="info-fade">
+                            {{ empregado.telefone }}
+                        </small>
+                    </h5>
+                    <p>{{ empregado.email }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
