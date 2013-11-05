@@ -40,11 +40,17 @@ class CaixasController extends Controller
             $em = $this->getDoctrine()->getRepository('PatoBundle:CaixasMovimentos');
 
             $movimentos = $em->pegarMovimentosMes($caixa, $mes);
+            
+            $balancoMensal = $em->pegarBalancoMensal($caixa, $mes);
+
+            $balancoAnual = $em->pegarBalancoAnual($caixa, 0);
 
             return $this->render('PatoBundle:Caixas:index.html.twig', array(
                 'caixas' => $caixas,
                 'caixaSelecionado' => $caixaSelecionado,
                 'movimentos' => $movimentos,
+                'balancoMensal' => $balancoMensal,
+                'balancoAnual' => $balancoAnual,
                 'mes' => $mes
             ));
         }

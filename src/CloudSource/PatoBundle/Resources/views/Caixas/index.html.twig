@@ -164,7 +164,7 @@
                                 <td></td>
                                 <td></td>
                                 <td><strong>Entradas:</strong></td>
-                                <td>999999</td>
+                                <td>R$ {{ balancoMensal.entradas | number_format(2, ',', '.') }}</td>
                                 <td></td>
                             <tr>
                             <tr>
@@ -172,7 +172,15 @@
                                 <td></td>
                                 <td></td>
                                 <td><strong><font color="red">Saidas:</font></strong></td>
-                                <td><font color="red">999999</font></td>
+                                <td><font color="red">R$ {{ balancoMensal.saidas | number_format(2, ',', '.') }}</font></td>
+                                <td></td>
+                            <tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td><strong><font size='3'>Balanço Mês:</font></strong></td>
+                                <td><font size='3' color="{% if balancoMensal.balanco < 0 %} red {% endif %}">R$ {{ balancoMensal.balanco | number_format(2, ',', '.') }}</font></td>
                                 <td></td>
                             <tr>
                     </tbody>
@@ -343,7 +351,38 @@
     </div>
 </div>
 
+{% endblock %}
 
+{% block bodyRight %}
+    <div class="wrapper">
+        <ul class="mini-dashboard">
+            <li>
+                <center>
+                    <font size='6'>Balanço Anual
+                        <font size='3'><small>caixa {{ caixaSelecionado.nome }}</small></font>
+                    </font>
+                </center>
+                <br>
+            </li>
+
+            <li>
+                <h5>Entradas</h5>
+                R$ {{ balancoAnual.entradas | number_format(2, ',', '.') }}
+            </li>            
+            <li>
+                <font color="red">
+                    <h5>Saidas</h5>
+                    R$ {{ balancoAnual.saidas | number_format(2, ',', '.') }}
+                </font>
+            </li>
+            <li>
+                <h5>Balanço</h5>
+                <font color="{% if balancoAnual.balanco < 0 %} red {% endif %}">
+                    R$ {{ balancoAnual.balanco | number_format(2, ',', '.') }}
+                </font>
+            </li>
+        </ul>
+    </div>
 {% endblock %}
 
 {% block addScript %}
