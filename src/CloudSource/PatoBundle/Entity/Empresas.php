@@ -79,6 +79,18 @@ class Empresas
      */
     private $criador;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $empregados;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->empregados = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -387,5 +399,38 @@ class Empresas
     public function getCriador()
     {
         return $this->criador;
+    }
+
+    /**
+     * Add empregados
+     *
+     * @param \CloudSource\PatoBundle\Entity\Clientes $empregado
+     * @return Caixas
+     */
+    public function addEmpregados(\CloudSource\PatoBundle\Entity\Clientes $empregado)
+    {
+        $this->empregados[] = $empregado;
+    
+        return $this;
+    }
+
+    /**
+     * Remove empregado
+     *
+     * @param \CloudSource\PatoBundle\Entity\Clientes $empregado
+     */
+    public function removeEmpregados(\CloudSource\PatoBundle\Entity\Clientes $empregado)
+    {
+        $this->empregado->removeElement($empregado);
+    }
+
+    /**
+     * Get empregado
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getEmpregados()
+    {
+        return $this->empregados;
     }
 }

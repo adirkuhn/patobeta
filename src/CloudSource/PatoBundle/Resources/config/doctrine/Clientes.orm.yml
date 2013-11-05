@@ -101,7 +101,7 @@ CloudSource\PatoBundle\Entity\Clientes:
             targetEntity: Empresas
             cascade: {  }
             mappedBy: null
-            inversedBy: null
+            inversedBy: empregados
             joinColumns:
                 empresa:
                     referencedColumnName: id

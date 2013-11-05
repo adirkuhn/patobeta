@@ -61,6 +61,10 @@ CloudSource\PatoBundle\Entity\Empresas:
             length: 45
             fixed: false
             nullable: true
+    oneToMany:
+        empregados:
+            targetEntity: Clientes
+            mappedBy: empresa
     manyToOne:
         cidade:
             targetEntity: Cidades
