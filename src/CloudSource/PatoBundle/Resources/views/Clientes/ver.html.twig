@@ -112,3 +112,28 @@
     </div>
 
 {% endblock %}
+
+{% block bodyRight %}
+    
+        <div class="wrapper">
+            <h3>Empresa</h3>
+                <ul class="month-income">
+                    {% if cliente.empresa is not null %}
+                        <li onclick="window.location.href='{{ path('pato_empresa_ver', { 'id': cliente.empresa.id }) }}';">
+                            <span class="icon-block blue-block">
+                                <b class="fs1" aria-hidden="true" data-icon=""></b>
+                            </span>
+                            <h5>
+                                {{ cliente.empresa.nomeFantasia }}
+                                <small class="info-fade">
+
+                                </small>
+                            </h5>
+                            <p>{{ cliente.empresa.email }}</p>
+                        </li>
+                    {% else %}
+                        <li>Sem empresa associada.</li>
+                    {% endif %}
+                </ul>
+        </div>
+{% endblock %}

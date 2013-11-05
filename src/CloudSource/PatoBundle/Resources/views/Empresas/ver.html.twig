@@ -7,7 +7,7 @@
 {% block bodyLeft %}
 
     <div id="acoes-topo" class="wrapper">
-        <button class="btn btn-large btn-warning" onclick="location.href='{{ path('pato_empresa_homepage') }}'">Voltar</button>
+        <button class="btn btn-large btn-warning" onclick="window.history.back()">Voltar</button>
         <div class="clearfix"></div>
     </div>
 
@@ -113,20 +113,24 @@
     <div class="wrapper">
         <h3>Contatos</h3>
         <ul class="month-income">
-            {% for empregado in empresa.empregados %}
-                <li onclick="window.location.href='{{ path('pato_cliente_get_view', { 'id': empregado.id }) }}';">
-                    <span class="icon-block blue-block">
-                        <b class="fs1" aria-hidden="true" data-icon=""></b>
-                    </span>
-                    <h5>
-                        {{ empregado.nome }}
-                        <small class="info-fade">
-                            {{ empregado.telefone }}
-                        </small>
-                    </h5>
-                    <p>{{ empregado.email }}</p>
-                </li>
-            {% endfor %}
+            {% if empresa.empregados is not null %}
+                {% for empregado in empresa.empregados %}
+                    <li onclick="window.location.href='{{ path('pato_cliente_get_view', { 'id': empregado.id }) }}';">
+                        <span class="icon-block blue-block">
+                            <b class="fs1" aria-hidden="true" data-icon=""></b>
+                        </span>
+                        <h5>
+                            {{ empregado.nome }}
+                            <small class="info-fade">
+                                {{ empregado.telefone }}
+                            </small>
+                        </h5>
+                        <p>{{ empregado.email }}</p>
+                    </li>
+                {% endfor %}
+            {% else %}
+                <li>Sem funcionários associados.</li>
+            {% endif %}
         </ul>
     </div>
 {% endblock %}
