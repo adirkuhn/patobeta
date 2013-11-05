@@ -7,7 +7,8 @@
 {% block bodyLeft %}
 
     <div id="acoes-topo" class="wrapper">
-        <button class="btn btn-large btn-warning" onclick="location.href='{{ path('pato_empresa_homepage') }}'">Voltar</button>
+        <!-- <button class="btn btn-large btn-warning" onclick="location.href='{{ path('pato_empresa_homepage') }}'">Voltar</button> -->
+        <button class="btn btn-large btn-warning" onclick="window.history.back();">Voltar</button>
         <div class="clearfix"></div>
     </div>
 
@@ -230,8 +231,8 @@ function buscaEmpresas(empresa) {
 }
 
 $(document).ready(
-    carregaEstados()
-    //$('#empresas_estado').on('change', carregaCidades)
+    carregaEstados(),
+    $('#empresas_estado').on('change', carregaCidades)
 );
 
 {% endblock %}
