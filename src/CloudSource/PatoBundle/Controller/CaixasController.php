@@ -44,6 +44,7 @@ class CaixasController extends Controller
             return $this->render('PatoBundle:Caixas:index.html.twig', array(
                 'caixas' => $caixas,
                 'caixaSelecionado' => $caixaSelecionado,
+                'movimentos' => $movimentos,
                 'mes' => $mes
             ));
         }
