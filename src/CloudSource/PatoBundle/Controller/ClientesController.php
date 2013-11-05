@@ -54,7 +54,7 @@ class ClientesController extends Controller
         $id = (int) $id;
 
         //pega repositorio de dados
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         $cliente = $em->find('PatoBundle:Clientes', $id);
 
@@ -81,7 +81,7 @@ class ClientesController extends Controller
         $id = (int) $id;
 
         //pega repositorio de dados
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         $cliente = $em->find('PatoBundle:Clientes', $id);
 
@@ -112,7 +112,7 @@ class ClientesController extends Controller
         $id = (int) $id;
 
         //pega repositorio de dados
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         //busca cliente
         $cliente = null;
@@ -156,7 +156,7 @@ class ClientesController extends Controller
         $page = (int) $page;
 
         //pega repositorio de dados
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         $query = $em->createQuery('
             SELECT
@@ -208,7 +208,7 @@ class ClientesController extends Controller
         if (array_key_exists('nome', $post) && !empty($post['nome'])) {
 
             //pega repositorio de dados
-            $em = $this->getDoctrine()->getEntityManager();
+            $em = $this->getDoctrine()->getManager();
 
             //Verifica se esta sendo passado ID, nesse caso é update
             if (isset($post['id']) && $post['id'] > 0) {
