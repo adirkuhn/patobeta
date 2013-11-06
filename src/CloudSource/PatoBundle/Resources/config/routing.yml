@@ -183,3 +183,8 @@ pato_caixa_tipos_movimentos:
     defaults: { _controller: PatoBundle:CaixasMovimentosTipos:tiposMovimento, tipoMovimento: 'todos' }
     methods: [GET]
 
+#configuracao
+pato_configuracao_homepage:
+    pattern: /configuracao
+    defaults: { _controller: PatoBundle:Configuracao:index }
+

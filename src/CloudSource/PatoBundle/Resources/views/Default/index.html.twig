@@ -132,17 +132,17 @@
                 Caixa
               </a>
             </li>
-            <li>
+<!--             <li>
               <a href="icons.html">
                 <div class="fs1" aria-hidden="true" data-icon="&#xe0a9;"></div>
                 Agenda
               </a>
-            </li>
+            </li> -->
 
             <li>
-              <a href="edit-profile.html">
-                <div class="fs1" aria-hidden="true" data-icon="&#xe0aa;"></div>
-                Configuração
+              <a href="{{ path('pato_configuracao_homepage') }}" {% if  'pato_config' in app.request.get('_route') %} class="selected" {% endif %}>
+                <div class="fs1" aria-hidden="true" data-icon=""></div>
+                Configurar
               </a>
             </li>
 
@@ -181,7 +181,7 @@
     <footer>
     {% block footer %}
       <p>
-        &copy; baswaAdmin 2013
+        &copy; <a href="http://cloudsource.com.br">Cloud Source {{ "now"|date("Y") }}</a>
       </p>
     {% endblock %}
     </footer>
