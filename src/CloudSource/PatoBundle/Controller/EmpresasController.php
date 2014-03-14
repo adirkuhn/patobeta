@@ -76,7 +76,7 @@ class EmpresasController extends Controller
                 $em->persist($empresa);
                 $em->flush();
 
-                return $this->render('PatoBundle:Empresas:nova.html.twig', array('form' => $form->createView()));
+                return $this->render('PatoBundle:Empresas:index.html.twig', array('form' => $form->createView()));
             }
             catch(Exception $e) {
                 //TODO: melhorar tratamento de erro

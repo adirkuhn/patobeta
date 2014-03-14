@@ -168,15 +168,29 @@ pato_caixa_entrada_post:
 
 pato_caixa_movimento_post:
     pattern: /caixa/movimento
-    defaults: { _controller: PatoBundle:Caixas:movimento }
+    defaults: { _controller: PatoBundle:CaixasMovimentos:movimento }
     methods: [POST]
 
+pato_caixa_movimento_pegar:
+    pattern: /caixa/movimento/{id}
+    defaults: { _controller: PatoBundle:CaixasMovimentos:pegarMovimento }
+    requirements:
+        id: \d+
+
+pato_caixa_movimento_deletar:
+    pattern: /caixa/movimento/deletar/{id}
+    defaults: { _controller: PatoBundle:CaixasMovimentos:deletarMovimento, id: 0 }
+    requirements:
+        id: \d+
+
 pato_caixa_homepage:
-    pattern: /caixa/{caixa}/{mes}
-    defaults: { _controller: PatoBundle:Caixas:index, caixa: 0, mes:0 }
+    pattern: /caixa/{caixa}/{ano}/{mes}
+    defaults: { _controller: PatoBundle:Caixas:index, caixa: 0, ano:0, mes:0 }
     methods: [GET]
     requirements:
         caixa: \d+
+        mes: \d+
+        ano: \d+
 
 pato_caixa_tipos_movimentos:
     pattern: /caixa/tiposmovimento/{tipoMovimento}
@@ -188,3 +202,30 @@ pato_configuracao_homepage:
     pattern: /configuracao
     defaults: { _controller: PatoBundle:Configuracao:index }
 
+pato_configuracao_caixa_index:
+    pattern: /configuracao/caixa
+    defaults: { _controller: PatoBundle:Caixas:configuracaoCaixaIndex }
+
+pato_configuracao_caixa_index_crud_novo:
+    pattern: /configuracao/caixa/novo
+    defaults: { _controller: PatoBundle:Caixas:configuracaoCaixaCrudNovo }
+
+pato_configuracao_caixa_index_crud_editar:
+    pattern: /configuracao/caixa/editar/{id}
+    defaults: { _controller: PatoBundle:Caixas:configuracaoCaixaCrudEditar, id: 0 }
+    methods: [GET]
+    requirements:
+        id: \d+
+
+pato_configuracao_caixa_index_crud_editar_atualizar:
+    pattern: /configuracao/caixa/editar/{id}
+    defaults: { _controller: PatoBundle:Caixas:configuracaoCaixaCrudEditarAtualizar, id: 0 }
+    methods: [POST]
+    requirements:
+        id: \d+
+
+pato_configuracao_caixa_index_crud_deletar:
+    pattern: /configuracao/caixa/deletar/{id}
+    defaults: { _controller: PatoBundle:Caixas:configuracaoCaixaCrudDeletar, id: 0 }
+    requirements:
+        id: \d+

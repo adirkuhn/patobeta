@@ -15,10 +15,10 @@ class CaixasMovimentosRepository extends EntityRepository
      * @param string $mes Mês de qual deverá ser retornado os movimentos
      * 
      **/
-    public function pegarMovimentosMes($caixa, $mes)
+    public function pegarMovimentosMes($caixa, $mes, $ano)
     {
-        $dtInicio = date('Y-' . $mes . '-01');
-        $dtFim = date('Y-' . $mes . '-31');
+        $dtInicio = date($ano . '-' . $mes . '-01');
+        $dtFim = date($ano . '-' . $mes . '-31');
 
         return $this->getEntityManager()
             ->createQuery('
@@ -141,6 +141,27 @@ class CaixasMovimentosRepository extends EntityRepository
                 'dtFim' => $dtFim,
                 'tipo' => $tipo,
             ))
+            ->getResult();
+    }
+
+    /**
+     * Retorna anos que houveram movimento
+     * 
+     * @author Adir Kuhn <adirkuhn@gmail.com>
+     *
+     * @return mixed Anos que há movimentação
+     **/
+    public function pegarAnosMovimento()
+    {
+        return $this->getEntityManager()
+            ->createQuery('
+                SELECT
+                    SUBSTRING(c.dtMovimento, 1, 4) as ano
+                FROM
+                    PatoBundle:CaixasMovimentos c
+                GROUP BY
+                    ano
+            ')
             ->getResult();
     }
 

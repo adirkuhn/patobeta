@@ -281,7 +281,7 @@ class ClientesController extends Controller
                 }
             } else {
                 //TODO: tratar erro de forma humanitaria
-                die('macarena');
+                die('Usuario Não existe');
             }
 
         } else {

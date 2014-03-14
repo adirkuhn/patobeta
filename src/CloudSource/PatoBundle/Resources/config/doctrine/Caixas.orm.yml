@@ -15,6 +15,7 @@ CloudSource\PatoBundle\Entity\Caixas:
             length: 100
             fixed: false
             nullable: false
+            unique: true
         descricao:
             type: string
             length: 255
