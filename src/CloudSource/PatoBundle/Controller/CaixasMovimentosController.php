@@ -41,17 +41,19 @@ class CaixasMovimentosController extends Controller {
      * Retorna os dados de um movimento
      * 
      * @author Adir Kuhn <adirkuhn@gmail.com>
+     * 
+     * @param int $id Identificação do movimento
      *
      * @return mixed JSON dos dados de um movimento
      **/
-    public function pegaMovimento($movimentoId)
+    public function pegarMovimentoAction($id)
     {
         //pega repositorio de dados
         $em = $this->getDoctrine()->getEntityManager();
 
-        $movimento = $this->find('PatoBundle:CaixasMovimentos', $id);
+        $movimento = $em->find('PatoBundle:CaixasMovimentos', $id);
 
-        if ( !$tipoMovimento instanceof CaixasMovimentos) {
+        if ( !$movimento instanceof CaixasMovimentos) {
 
             return $this->resposta(
                 array('erro' => 'Não foi possivel encontrar o movimento.'),
@@ -64,7 +66,8 @@ class CaixasMovimentosController extends Controller {
         $resposta['descricao'] = $movimento->getDescricao();
         $resposta['caixa'] = $movimento->getCaixa()->getId();
         $resposta['valor'] = $movimento->getValor();
-        $resposta['data'] = $movimento->getDtMovimento();
+        $resposta['data'] = $movimento->getDtMovimento()->format('d/m/Y');
+        $resposta['tipoMovimento'] = $movimento->getCaixaMovimentoTipo()->getId();
 
 
         return $this->resposta($resposta);
@@ -112,8 +115,26 @@ class CaixasMovimentosController extends Controller {
             //converter , para .
             $valor = $post['valor'];
 
-            $movimento = new CaixasMovimentos();
-            $movimento->setCriado(new \Datetime('now'));
+            //verifica se o movimento já existe (update) ou sera um novo
+            if (!empty($post['id'])) {
+                $movimento = $em->find('PatoBundle:CaixasMovimentos', $post['id']);
+
+                //caso o id nao exista no banco
+                if (! $movimento instanceof CaixasMovimentos) {
+
+                    return $this->resposta(
+                        array('erro' => 'Recurso não existe.'),
+                        404
+                    );
+                }
+
+                //TODO: Colocar data de atualização?
+            }
+            else {
+
+                $movimento = new CaixasMovimentos();
+                $movimento->setCriado(new \Datetime('now'));
+            }
 
             $movimento->setDescricao($post['descricao']);
             $movimento->setCaixa($em->getRepository('PatoBundle:Caixas')->find($post['caixa']));

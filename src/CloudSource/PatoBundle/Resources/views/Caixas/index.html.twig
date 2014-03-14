@@ -190,6 +190,7 @@
     <div class="modal-body">
         <form name="novaEntrada" id="novaEntrada">
             <input name="caixa" type="hidden" value="{{ caixaSelecionado.id }}" />
+            <input name="id" type="hidden" value="" />
             <div class="control-group">
                 <label class="control-label" for="descricao">
                   Descrição:
@@ -429,6 +430,21 @@ function editarMovimento(id, movimentoTipo) {
     //carrega dados
     $.get('{{path("pato_caixa_movimento_pegar")}}/'+id, function(data){
         console.log(data);
+        $("form[name=nova" + movimentoTipo + "] input[name=id]").val(data.id);
+        $("form[name=nova" + movimentoTipo + "] input[name=descricao]").val(data.descricao);
+        $("form[name=nova" + movimentoTipo + "] input[name=valor]").val(data.valor);
+        $("form[name=nova" + movimentoTipo + "] input[name=data]").val(data.data);
+
+        //seleciona o tipo de movimento
+        $("form[name=nova" + movimentoTipo + "]  select option").each(function(d, a) {
+            var op = $(this);
+            if ( op.val() == data.tipoMovimento ) {
+                op.attr('selected', true);
+            } 
+            else {
+                op.removeAttr('selected');
+            }
+        })
     });
 
     console.log($("form#nova" + movimentoTipo + " input[name=id]"));
