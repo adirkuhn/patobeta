@@ -173,7 +173,7 @@ pato_caixa_movimento_post:
 
 pato_caixa_movimento_pegar:
     pattern: /caixa/movimento/{id}
-    defaults: { _controller: PatoBundle:CaixasMovimentos:pegarMovimento }
+    defaults: { _controller: PatoBundle:CaixasMovimentos:pegarMovimento, id:0 }
     requirements:
         id: \d+
 
