@@ -427,7 +427,7 @@ function editarMovimento(id, movimentoTipo) {
     $('#btNova' + movimentoTipo).click();
 
     //carrega dados
-    $.get('{{path(pato_caixa_movimento_pegar)}}/'+id, function(data){
+    $.get('{{path("pato_caixa_movimento_pegar")}}/'+id, function(data){
         console.log(data);
     });
 
