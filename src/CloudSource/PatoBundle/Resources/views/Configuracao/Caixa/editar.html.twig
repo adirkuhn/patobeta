@@ -1,0 +1,48 @@
+{% extends 'PatoBundle:Default:index.html.twig' %}
+
+{% block title %}
+    Configuração - Caixa - Novo Caixa
+{% endblock %}
+
+{% block bodyLeft %}
+    <h1>Novo Caixa</h1>
+
+
+    <div style="max-width: 570px">
+        {% if msg_erro is defined %}
+        <div class="">
+            {{ msg_erro }}
+        </div>
+        {% endif %}
+
+        {{ form(form) }}
+    </div>
+
+    <a id="caixaSalvo" href="#modalCaixaSalvo" role="button" data-toggle="modal" data-original-title=""></a>
+    <div id="modalCaixaSalvo" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                ×
+            </button>
+            <h3 id="myModalLabel">
+                Caixa salvo com sucesso.
+            </h3>
+        </div>
+
+        <div class="modal-footer">
+            <a href="{{ path('pato_configuracao_caixa_index') }}" class="btn btn-warning">
+                Voltar para listagem
+            </a>
+
+            <a href="{{ path('pato_configuracao_caixa_index_crud_novo') }}" class="btn btn-primary close" data-dismiss="modal">
+                Continuar Editando
+            </a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block addScripts %}
+    {% if salvo is defined %}
+        $('#caixaSalvo').click();
+    {% endif %}
+{% endblock %}
