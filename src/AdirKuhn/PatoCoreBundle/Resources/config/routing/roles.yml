@@ -1,0 +1,5 @@
+config_roles_protect_resources:
+    path:     /{userId}
+    defaults: { _controller: "PatoCoreBundle:Roles:protectResources", userId: 0 }
+    requirements:
+        userId: \d+

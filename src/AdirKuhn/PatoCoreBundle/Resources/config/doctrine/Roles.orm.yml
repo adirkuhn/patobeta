@@ -1,0 +1,29 @@
+AdirKuhn\PatoCoreBundle\Entity\Roles:
+    type: entity
+    table: null
+    repositoryClass: AdirKuhn\PatoCoreBundle\Entity\RolesRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        entity:
+            type: string
+            length: '50'
+        role:
+            type: string
+            length: '1'
+    manyToOne:
+        user:
+            targetEntity: User
+            inversedBy: roles
+            joinColumn:
+                name: user_id
+                referencedColumnName: id
+
+    uniqueConstraints:
+            role_key_constraint:
+                columns: [entity, role, user_id]
+    lifecycleCallbacks: {  }

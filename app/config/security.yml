@@ -1,12 +1,36 @@
 security:
+    encoders:
+        AdirKuhn\PatoCoreBundle\Entity\User: sha512
+        Symfony\Component\Security\Core\User\User: plaintext
+
     providers:
+        main:
+            entity:
+                class: AdirKuhn\PatoCoreBundle\Entity\User
+                property: email
         in_memory:
-            memory: ~
+            memory:
+                users:
+                    user:  { password: userpass, roles: [ 'ROLE_USER' ] }
+                    admin: { password: adminpass, roles: [ 'ROLE_ADMIN' ] }
 
     firewalls:
         dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            pattern:  ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-        default:
-            anonymous: ~
+        login:
+            pattern:  ^/login$
+            security: false
+
+        secured_area:
+            pattern:    ^/
+            form_login:
+                check_path: pato_core_login_check
+                login_path: pato_core_login_route
+            logout:
+                path:   pato_core_logout
+                target: /
+
+    access_control:
+         - { path: ^/config, roles: [ROLE_ADMIN] }

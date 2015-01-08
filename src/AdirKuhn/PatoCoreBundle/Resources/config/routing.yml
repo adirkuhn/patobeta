@@ -1,0 +1,25 @@
+pato_core_homepage:
+    path:     /
+    defaults: { _controller: PatoCoreBundle:Default:index }
+
+pato_core_login_route:
+    path:     /login
+    defaults: { _controller: PatoCoreBundle:Login:login }
+
+pato_core_login_check:
+    path: /login_check
+
+pato_core_logout:
+    path: /logout
+
+pato_core_config:
+    resource: "@PatoCoreBundle/Resources/config/routing/config.yml"
+    prefix: /config
+
+pato_core_user:
+    resource: "@PatoCoreBundle/Resources/config/routing/user.yml"
+    prefix:   /config/user
+
+pato_core_roles:
+    resource: "@PatoCoreBundle/Resources/config/routing/roles.yml"
+    prefix:   /config/roles

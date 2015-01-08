@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    {% stylesheets
+        'bundles/patocore/css/bootstrap.css'
+        'bundles/patocore/css/font-awesome.css'
+        'bundles/patocore/css/jquery-ui.css'
+        'bundles/patocore/css/bootstrap-switch.css'
+        'bundles/patocore/css/style.css'
+        'bundles/patocore/css/widgets.css'
+
+        filter='cssrewrite'
+    %}
+
+    <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+    <!--//-->
+    {% block extracss %}
+    {% endblock %}
+
+    <title>{% block title %}Pato Beta{% endblock %}</title>
+</head>
+<body>
+{% block body %}
+
+    <div class="navbar navbar-fixed-top bs-docs-nav" role="banner">
+
+        <div class="conjtainer">
+            <!-- Menu button for smallar screens -->
+            <div class="navbar-header">
+                <button class="navbar-toggle btn-navbar" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+                    <span>Menu</span>
+                </button>
+                <!-- Site name for smallar screens -->
+                <a href="{{ path('pato_core_homepage') }}" class="navbar-brand hidden-lg">Inicio</a>
+            </div>
+
+
+
+            <!-- Navigation starts -->
+            <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+
+                <!-- Search form -->
+                {#<form class="navbar-form navbar-left" role="search" style="width: 50%">#}
+                    {#<div class="form-group" style="width: 100%">#}
+                        {#<input type="text" class="form-control" placeholder="Buscar clientes">#}
+                    {#</div>#}
+                {#</form>#}
+                <!-- Links -->
+                <ul class="nav navbar-nav pull-right">
+                    <li class="dropdown pull-right {% if 'config' in app.request.get('_route') %} open {% endif %}">
+                        <a {#data-toggle="dropdown" class="dropdown-toggle"#} href="{{ path('config_home') }}">
+                            <i class="icon-gears"></i> Configurações
+                        </a>
+
+                        {#<!-- Dropdown menu -->#}
+                        {#<ul class="dropdown-menu">#}
+                            {#<li><a href="#"><i class=""></i> Usuários</a></li>#}
+
+                        {#</ul>#}
+                    </li>
+
+                </ul>
+            </nav>
+
+        </div>
+    </div>
+
+
+    <!-- Header starts -->
+    <header>
+        <div class="container">
+            <div class="row">
+
+                <!-- Logo section -->
+                <div class="col-md-4">
+                    <!-- Logo. -->
+                    <div class="logo">
+                        <h1><a href="{{ path('pato_core_homepage') }}">Pato<span class="bold">Beta</span></a></h1>
+                        <p class="meta">sistema de gestão administrativo</p>
+                    </div>
+                    <!-- Logo ends -->
+                </div>
+
+                <!-- Button section -->
+                <div class="col-md-4">
+
+                    <!-- Buttons -->
+                    {#<ul class="nav nav-pills">#}
+
+                        {#<!-- Comment button with number of latest comments count -->#}
+                        {#<li class="dropdown dropdown-big">#}
+                            {#<a class="dropdown-toggle" href="#" data-toggle="dropdown">#}
+                                {#<i class="icon-comments"></i> Chats <span   class="label label-info">6</span>#}
+                            {#</a>#}
+
+                            {#<ul class="dropdown-menu">#}
+                                {#<li>#}
+                                    {#<!-- Heading - h5 -->#}
+                                    {#<h5><i class="icon-comments"></i> Chats</h5>#}
+                                    {#<!-- Use hr tag to add border -->#}
+                                    {#<hr />#}
+                                {#</li>#}
+                                {#<li>#}
+                                    {#<!-- List item heading h6 -->#}
+                                    {#<h6><a href="#">Hi :)</a> <span class="label label-warning pull-right">10:42</span></h6>#}
+                                    {#<div class="clearfix"></div>#}
+                                    {#<hr />#}
+                                {#</li>#}
+                                {#<li>#}
+                                    {#<h6><a href="#">How are you?</a> <span class="label label-warning pull-right">20:42</span></h6>#}
+                                    {#<div class="clearfix"></div>#}
+                                    {#<hr />#}
+                                {#</li>#}
+                                {#<li>#}
+                                    {#<h6><a href="#">What are you doing?</a> <span class="label label-warning pull-right">14:42</span></h6>#}
+                                    {#<div class="clearfix"></div>#}
+                                    {#<hr />#}
+                                {#</li>#}
+                                {#<li>#}
+                                    {#<div class="drop-foot">#}
+                                        {#<a href="#">View All</a>#}
+                                    {#</div>#}
+                                {#</li>#}
+                            {#</ul>#}
+                        {#</li>#}
+
+                        {#<!-- Message button with number of latest messages count-->#}
+                        {#<li class="dropdown dropdown-big">#}
+                            {#<a class="dropdown-toggle" href="#" data-toggle="dropdown">#}
+                                {#<i class="icon-envelope-alt"></i> Inbox <span class="label label-primary">6</span>#}
+                            {#</a>#}
+
+                            {#<ul class="dropdown-menu">#}
+                                {#<li>#}
+                                    {#<!-- Heading - h5 -->#}
+                                    {#<h5><i class="icon-envelope-alt"></i> Messages</h5>#}
+                                    {#<!-- Use hr tag to add border -->#}
+                                    {#<hr />#}
+                                {#</li>#}
+                                {#<li>#}
+                                    {#<!-- List item heading h6 -->#}
+                                    {#<h6><a href="#">Hello how are you?</a></h6>#}
+                                    {#<!-- List item para -->#}
+                                    {#<p>Quisque eu consectetur erat eget  semper...</p>#}
+                                    {#<hr />#}
+                                {#</li>#}
+                                {#<li>#}
+                                    {#<h6><a href="#">Today is wonderful?</a></h6>#}
+                                    {#<p>Quisque eu consectetur erat eget  semper...</p>#}
+                                    {#<hr />#}
+                                {#</li>#}
+                                {#<li>#}
+                                    {#<div class="drop-foot">#}
+                                        {#<a href="#">View All</a>#}
+                                    {#</div>#}
+                                {#</li>#}
+                            {#</ul>#}
+                        {#</li>#}
+
+                        {#<!-- Members button with number of latest members count -->#}
+                        {#<li class="dropdown dropdown-big">#}
+                            {#<a class="dropdown-toggle" href="#" data-toggle="dropdown">#}
+                                {#<i class="icon-user"></i> Users <span   class="label label-success">6</span>#}
+                            {#</a>#}
+
+                            {#<ul class="dropdown-menu">#}
+                                {#<li>#}
+                                    {#<!-- Heading - h5 -->#}
+                                    {#<h5><i class="icon-user"></i> Users</h5>#}
+                                    {#<!-- Use hr tag to add border -->#}
+                                    {#<hr />#}
+                                {#</li>#}
+                                {#<li>#}
+                                    {#<!-- List item heading h6-->#}
+                                    {#<h6><a href="#">Ravi Kumar</a> <span class="label label-warning pull-right">Free</span></h6>#}
+                                    {#<div class="clearfix"></div>#}
+                                    {#<hr />#}
+                                {#</li>#}
+                                {#<li>#}
+                                    {#<h6><a href="#">Balaji</a> <span class="label label-important pull-right">Premium</span></h6>#}
+                                    {#<div class="clearfix"></div>#}
+                                    {#<hr />#}
+                                {#</li>#}
+                                {#<li>#}
+                                    {#<h6><a href="#">Kumarasamy</a> <span class="label label-warning pull-right">Free</span></h6>#}
+                                    {#<div class="clearfix"></div>#}
+                                    {#<hr />#}
+                                {#</li>#}
+                                {#<li>#}
+                                    {#<div class="drop-foot">#}
+                                        {#<a href="#">View All</a>#}
+                                    {#</div>#}
+                                {#</li>#}
+                            {#</ul>#}
+                        {#</li>#}
+
+                    {#</ul>#}
+
+                </div>
+
+                <!-- Data section -->
+
+                <div class="col-md-4">
+                    {#<div class="header-data">#}
+
+                        {#<!-- Traffic data -->#}
+                        {#<div class="hdata">#}
+                            {#<div class="mcol-left">#}
+                                {#<!-- Icon with red background -->#}
+                                {#<i class="icon-signal bred"></i>#}
+                            {#</div>#}
+                            {#<div class="mcol-right">#}
+                                {#<!-- Number of visitors -->#}
+                                {#<p><a href="#">7000</a> <em>visits</em></p>#}
+                            {#</div>#}
+                            {#<div class="clearfix"></div>#}
+                        {#</div>#}
+
+                        {#<!-- Members data -->#}
+                        {#<div class="hdata">#}
+                            {#<div class="mcol-left">#}
+                                {#<!-- Icon with blue background -->#}
+                                {#<i class="icon-user bblue"></i>#}
+                            {#</div>#}
+                            {#<div class="mcol-right">#}
+                                {#<!-- Number of visitors -->#}
+                                {#<p><a href="#">3000</a> <em>users</em></p>#}
+                            {#</div>#}
+                            {#<div class="clearfix"></div>#}
+                        {#</div>#}
+
+                        {#<!-- revenue data -->#}
+                        {#<div class="hdata">#}
+                            {#<div class="mcol-left">#}
+                                {#<!-- Icon with green background -->#}
+                                {#<i class="icon-user bgreen"></i>#}
+                            {#</div>#}
+                            {#<div class="mcol-right">#}
+                                {#<!-- Number of visitors -->#}
+                                {#<p><a href="#">{{ userData.username }}</a><em>orders</em></p>#}
+                            {#</div>#}
+                            {#<div class="clearfix"></div>#}
+                        {#</div>#}
+
+                    {#</div>#}
+
+                    <ul class="nav nav-pills pull-right">
+                        <li class="dropdown dropdown-big">
+                            <a class="dropdown-toggle" href="#" data-toggle="dropdown">
+                                <i class="icon-user"></i> {{ app.user.getUsername }}
+                            </a>
+
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <h5><a href="{{ path('pato_core_logout') }}"><i class="icon-off"></i> Sair</a></h5>
+
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </header>
+
+
+    <!-- Main content starts -->
+
+    <div class="content">
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-dropdown"><a href="#">Navegação</a></div>
+
+            <!--- Sidebar navigation -->
+            <!-- If the main navigation has sub navigation, then add the class "has_sub" to "li" of main navigation. -->
+            <ul id="nav">
+                <!-- Main menu with font awesome icon -->
+                <li><a href="{{ path('pato_core_homepage') }}" {% if  'pato_core_homepage' in app.request.get('_route') %} class="open" {% endif %}><i class="icon-home"></i> Inicio</a>
+                    <!-- Sub menu markup
+                    <ul>
+                      <li><a href="#">Submenu #1</a></li>
+                      <li><a href="#">Submenu #2</a></li>
+                      <li><a href="#">Submenu #3</a></li>
+                    </ul>-->
+                </li>
+            </ul>
+        </div>
+
+        <!-- Sidebar ends -->
+
+        <!-- Main bar -->
+        <div class="mainbar">
+
+            <!-- Page heading -->
+            <div class="page-head">
+                <h2 class="pull-left"><i class="{% block mainbar_icon %}icon-home{% endblock %}"></i> {% block mainbar_title %}Inicio {% endblock %}</h2>
+
+                <!-- Breadcrumb -->
+                <div class="bread-crumb pull-right">
+                    {% block mainbar_breadcrumb %}<a href="{{ path('pato_core_homepage') }}"><i class="icon-home"></i> Inicio</a>{% endblock %}
+                </div>
+
+                <div class="clearfix"></div>
+
+            </div>
+            <!-- Page heading ends -->
+
+
+
+            <!-- Matter -->
+
+            <div class="matter">
+                <div class="container">
+                    {% block content %}
+                    {% endblock %}
+                </div>
+            </div>
+
+            <!-- Matter ends -->
+
+        </div>
+
+        <!-- Mainbar ends -->
+        <div class="clearfix"></div>
+
+    </div>
+    <!-- Content ends -->
+
+    <!-- Footer starts -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- Copyright info -->
+                    <p class="copy">Copyright &copy; 2014 | <a href="#">Your Site</a> </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Footer ends -->
+
+    {% javascripts
+
+        '@PatoCoreBundle/Resources/public/js/jquery.js'
+        '@PatoCoreBundle/Resources/public/js/bootstrap.js'
+        '@PatoCoreBundle/Resources/public/js/jquery-ui-1.9.2.custom.min.js'
+
+        '@PatoCoreBundle/Resources/public/js/jquery.noty.js'
+        '@PatoCoreBundle/Resources/public/js/themes/default.js'
+        '@PatoCoreBundle/Resources/public/js/layouts/bottom.js'
+        '@PatoCoreBundle/Resources/public/js/layouts/topRight.js'
+        '@PatoCoreBundle/Resources/public/js/layouts/top.js'
+
+        '@PatoCoreBundle/Resources/public/js/jquery.cleditor.min.js'
+        '@PatoCoreBundle/Resources/public/js/bootstrap-datetimepicker.min.js'
+        '@PatoCoreBundle/Resources/public/js/bootstrap-switch.min.js'
+        '@PatoCoreBundle/Resources/public/js/filter.js'
+        '@PatoCoreBundle/Resources/public/js/custom.js'
+
+
+    %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    {% block extrajs %}
+    {% endblock %}
+
+{% endblock %}
+</body>
+</html>

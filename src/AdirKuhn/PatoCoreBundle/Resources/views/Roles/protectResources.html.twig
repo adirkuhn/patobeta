@@ -1,0 +1,154 @@
+{% extends 'PatoCoreBundle:Default:base.html.twig' %}
+
+{% block mainbar_icon %}icon-gears{% endblock %}
+{% block mainbar_title %}Permissões{% endblock %}
+
+{% block mainbar_breadcrumb %}
+    <a href="{{ path('pato_core_homepage') }}"><i class="icon-home"></i> Inicio</a> /
+    <a href="{{ path('config_home') }}"> Configurações</a> /
+    Permissões
+
+{% endblock %}
+
+{% block content %}
+
+    <div class="widget">
+
+        <div class="widget-head">
+            <div class="pull-left">Permissões para {{ user.name }}</div>
+            <div class="widget-icons pull-right">
+                {#<a href="#" class="wminimize"><i class="icon-chevron-up"></i></a>#}
+                {#<a href="#" class="wclose"><i class="icon-remove"></i></a>#}
+            </div>
+            <div class="clearfix"></div>
+        </div>
+
+        <div class="widget-content">
+            <div class="padd">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2>Permissões do usuário <span class="text-primary">{{ user.name }}</span></h2>
+                    </div>
+                </div>
+
+                <form method="post">
+
+                    {% for key, protectedResource in protectedResources %}
+                        <div class="widget">
+
+                            <div class="widget-head">
+                                <div class="pull-left text-primary">{{ key|trans }}</div>
+                                <div class="widget-icons pull-right">
+                                    {#<a href="#" class="wminimize"><i class="icon-chevron-up"></i></a>#}
+                                    {#<a href="#" class="wclose"><i class="icon-remove"></i></a>#}
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="content">
+                                <div class="padd">
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-1">
+                                                <label for="roles[{{ key }}_read]" class="control-label">Ler</label>
+                                            </div>
+                                            <div class="col-lg-11 pull-left">
+                                                <div id="{{ key }}_read" class="make-switch has-switch" data-on="success" data-off="danger" data-on-label="Sim" data-off-label="Não">
+                                                    <input class="form-group" type="checkbox" name="roles[{{ key }}][read]" {% if ('ROLE_' ~ key|upper ~ '_READ') in user.roles %} checked value="on" {% else %} value="off" {% endif %}>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-1">
+                                                <label for="roles[{{ key }}_write]" class="control-label">Gravar</label>
+                                            </div>
+                                            <div class="col-lg-11 pull-left">
+                                                <div id="{{ key }}_write" class="make-switch has-switch" data-on="success" data-off="danger" data-on-label="Sim" data-off-label="Não">
+                                                    <input class="form-group" type="checkbox" name="roles[{{ key }}][write]" {% if ('ROLE_' ~ key|upper ~ '_WRITE') in user.roles %} checked value="on" {% else %} value="off" {% endif %}>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-1">
+                                                <label for="roles[{{ key }}_update]" class="control-label">Atualizar</label>
+                                            </div>
+                                            <div class="col-lg-11 pull-left">
+                                                <div id="{{ key }}_update" class="make-switch has-switch" data-on="success" data-off="danger" data-on-label="Sim" data-off-label="Não">
+                                                    <input class="form-group" type="checkbox" name="roles[{{ key }}][update]" {% if ('ROLE_' ~ key|upper ~ '_UPDATE') in user.roles %} checked value="on" {% else %} value="off" {% endif %}>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-1">
+                                                <label for="roles[{{ key }}_delete]" class="control-label">Apagar</label>
+                                            </div>
+                                            <div class="col-lg-11 pull-left">
+                                                <div id="{{ key }}_delete" class="make-switch has-switch" data-on="success" data-off="danger" data-on-label="Sim" data-off-label="Não">
+                                                    <input class="form-group" type="checkbox" name="roles[{{ key }}][delete]" {% if ('ROLE_' ~ key|upper ~ '_DELETE') in user.roles %} checked value="on" {% else %} value="off" {% endif %}>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                    <input type="submit" value="Salvar" class="btn btn-lg btn-primary">
+                </form>
+
+            </div>
+        </div>
+        <div class="widget-foot">
+
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block extrajs %}
+    <script type="text/javascript">
+
+        {% for key, protectedResource in protectedResources %}
+
+            $('#{{ key }}_read').on('switch-change', function(e, data){
+                var $el = $(data.el);
+
+                var value = data.value? "on": "off";
+
+                $el.val(value);
+            });
+            $('#{{ key }}_write').on('switch-change', function(e, data){
+                var $el = $(data.el);
+
+                var value = data.value? "on": "off";
+
+                $el.val(value);
+            });
+            $('#{{ key }}_update').on('switch-change', function(e, data){
+                var $el = $(data.el);
+
+                var value = data.value? "on": "off";
+
+                $el.val(value);
+            });
+            $('#{{ key }}_delete').on('switch-change', function(e, data){
+                var $el = $(data.el);
+
+                var value = data.value? "on": "off";
+
+                $el.val(value);
+            });
+
+        {% endfor %}
+
+    </script>
+{% endblock %}

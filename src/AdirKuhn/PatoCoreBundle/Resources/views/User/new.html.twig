@@ -1,0 +1,112 @@
+{% extends 'PatoCoreBundle:Default:base.html.twig' %}
+
+{% block mainbar_icon %}icon-group{% endblock %}
+{% block mainbar_title %}Novo usuário{% endblock %}
+
+{% block mainbar_breadcrumb %}
+    <a href="{{ path('pato_core_homepage') }}"><i class="icon-home"></i> Inicio</a> /
+    <a href="#configuracoes"> Configurações</a> /
+    <a href="{{ path('user') }}"> Usuários</a> /
+    Novo Usuário
+
+{% endblock %}
+
+{% block content%}
+    <div class="row">
+        <div class="col-lg-12">
+            <a href="{{ path('user') }}" class="btn-lg btn-danger"><i class="icon-chevron-left"></i> Cancelar</a>
+            <br/><br/>
+        </div>
+
+
+        <div class="col-lg-12">
+            <div class="widget">
+                {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+                <div class="widget-head">
+                    <div class="pull-left">Adicionar novo usuário</div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="widget-content">
+                    <div class="padd">
+
+                        {% if not form.vars.valid %}
+                            <div class="panel-danger text-danger alert alert-danger">
+
+                                {{ form_errors(form) }}
+                                {% for passwordField in form.password %}
+                                    {{ form_errors(passwordField) }}
+                                {% endfor %}
+
+                            </div>
+                        {% endif %}
+
+
+                        <div class="form-group">
+                            {{ form_label(form.name, "Nome", {'label_attr': {'class': 'col-lg-5 control-label'}}) }}
+                            <div class="col-lg-7">
+                                {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            {{ form_label(form.email, null, {'label_attr': {'class': 'col-lg-5 control-label'}}) }}
+                            <div class="col-lg-7">
+                                {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+
+                        {% for passwordField in form.password %}
+                            <div class="form-group">
+                                {{ form_label(passwordField, null, {'label_attr': {'class': 'col-lg-5 control-label'}}) }}
+                                <div class="col-lg-7">
+                                    {{ form_widget(passwordField, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                            </div>
+                        {% endfor %}
+
+                        <div class="form-group">
+                            {{ form_label(form.isActive, "Usuário Ativo?", {'label_attr': {'class': 'col-lg-5 control-label'}}) }}
+                            <div class="col-lg-7">
+                                <div id="isActived" class="make-switch has-switch" data-on="success" data-off="danger" data-on-label="Ativo" data-off-label="Inativo">
+                                    {{ form_widget(form.isActive, {'attr': {'class': ''}}) }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            {{ form_label(form.isAdmin, "É Administrador?", {'label_attr': {'class': 'col-lg-5 control-label'}}) }}
+                            <div class="col-lg-7">
+                                <div id="isActived" class="make-switch has-switch" data-on="success" data-off="danger" data-on-label="Sim" data-off-label="Não">
+                                    {{ form_widget(form.isAdmin, {'attr': {'class': ''}}) }}
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="widget-foot">
+                    <div class="row">
+                        <div class="col-md-6">
+                            {{ form_widget(form.submit, {'label': 'Salvar', 'attr': {'class': 'btn btn-success'}}) }}
+                            {{ form_end(form) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extrajs %}
+    <script type="text/javascript">
+
+        $('#isActived').on('switch-change', function(e, data){
+            var $el = $(data.el);
+
+            var value = data.value? 1: 0;
+
+            $el.val(value);
+        });
+
+    </script>
+{% endblock %}

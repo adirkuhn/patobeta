@@ -1,0 +1,8 @@
+AdirKuhn\PatoCoreBundle\Entity\User:
+    properties:
+        password:
+            - Length:
+                min: 4
+                max: 255
+                minMessage: "Sua senha deve ter no mínimo {{ limit }} caracteres"
+                maxMessage: "Sua senha não pode ser maior que {{ limit }} caracteres"

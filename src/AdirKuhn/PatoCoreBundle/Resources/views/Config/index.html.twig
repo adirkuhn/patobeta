@@ -1,0 +1,38 @@
+{% extends 'PatoCoreBundle:Default:base.html.twig' %}
+
+{% block mainbar_icon %}icon-gears{% endblock %}
+{% block mainbar_title %}Configurações{% endblock %}
+
+{% block mainbar_breadcrumb %}
+    <a href="{{ path('pato_core_homepage') }}"><i class="icon-home"></i> Inicio</a> /
+    Configurações
+
+{% endblock %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="widget">
+                <div class="widget-head">
+                    <div class="pull-left">Configurações do sistema</div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="widget-content">
+                    <div class="padd">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <a class="btn-lg btn-primary" href="{{ path('user') }}"><i class="icon-group"></i> Usuários</a>
+                            </div>
+                            <div class="col-md-4">
+                                <a class="btn-lg btn-primary" href="{{ path('user') }}"><i class="icon-lock"></i> Permissões</a>
+                            </div>
+                            <div class="col-md-4"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

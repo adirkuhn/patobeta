@@ -1,0 +1,3 @@
+#services:
+#    pato_core.userdata:
+#        class: AdirKuhn\PatoCoreBundle\Controller\DefaultController
