@@ -287,6 +287,13 @@
                       <li><a href="#">Submenu #3</a></li>
                     </ul>-->
                 </li>
+                <li class="dropdown dropdown-big">
+                    <a {% if  'clients' in app.request.get('_route') %} class="open subdrop" {% endif %}><i class="icon-briefcase"></i> Clientes</a>
+                    <ul {% if  'clients' in app.request.get('_route') %} style="display: block;" {% endif %}>
+                        <li {% if  'company' in app.request.get('_route') %} class="open bblue" {% endif %}><a href="{{ path('clients_company') }}"><i class="icon-building"></i>Empresas</a></li>
+                        <li {% if  'contact' in app.request.get('_route') %} class="open bblue" {% endif %}><a href="{{ path('clients_contact') }}"><i class="icon-male"></i>Contatos</a></li>
+                    </ul>
+                </li>
             </ul>
         </div>
 

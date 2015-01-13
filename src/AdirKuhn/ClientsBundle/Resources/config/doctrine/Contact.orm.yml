@@ -1,0 +1,50 @@
+AdirKuhn\ClientsBundle\Entity\Contact:
+    type: entity
+    table: null
+    repositoryClass: AdirKuhn\ClientsBundle\Entity\ContactRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 255
+        email:
+            type: string
+            length: 100
+            nullable: true
+        phone:
+            type: string
+            length: 50
+            nullable: true
+        cellphone:
+            type: string
+            length: 50
+            nullable: true
+        address:
+            type: string
+            length: 255
+            nullable: true
+        district:
+            type: string
+            length: 50
+            nullable: true
+        city:
+            type: string
+            length: 255
+            nullable: true
+        comments:
+            type: text
+            nullable: true
+
+    manyToOne:
+        company:
+            targetEntity: Company
+            inversedBy: contacts
+            joinColumn:
+                name: company_id
+                referencedColumnName: id
+    lifecycleCallbacks: {  }

@@ -1,0 +1,30 @@
+clients_company:
+    path:     /
+    defaults: { _controller: "ClientsBundle:Company:index" }
+
+clients_company_show:
+    path:     /{id}/show
+    defaults: { _controller: "ClientsBundle:Company:show" }
+
+clients_company_new:
+    path:     /new
+    defaults: { _controller: "ClientsBundle:Company:new" }
+
+clients_company_create:
+    path:     /create
+    defaults: { _controller: "ClientsBundle:Company:create" }
+    requirements: { _method: post }
+
+clients_company_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "ClientsBundle:Company:edit" }
+
+clients_company_update:
+    path:     /{id}/update
+    defaults: { _controller: "ClientsBundle:Company:update" }
+    requirements: { _method: post|put }
+
+clients_company_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "ClientsBundle:Company:delete" }
+    requirements: { _method: post|delete }

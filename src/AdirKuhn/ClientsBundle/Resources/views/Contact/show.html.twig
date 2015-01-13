@@ -1,0 +1,178 @@
+{% extends 'PatoCoreBundle:Default:base.html.twig' %}
+
+{% block mainbar_icon %}icon-male{% endblock %}
+{% block mainbar_title %}Contatos :: <span class="text-primary">{{ entity.name }}</span>{% endblock %}
+
+{% block mainbar_breadcrumb %}
+    <a href="{{ path('pato_core_homepage') }}"><i class="icon-home"></i> Inicio</a> /
+    <a href="{{ path('clients_contact') }}"> Contatos</a> /
+    {{ entity.name }}
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-6">
+            <div class="widget">
+                <div class="widget-head">
+                    <div class="pull-left">Contato</div>
+                    <div class="widget-icons pull-right">
+                        {#<a href="#" class="wminimize"><i class="icon-chevron-up"></i></a>#}
+                        {#<a href="#" class="wclose"><i class="icon-remove"></i></a>#}
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="widget-content padd">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <i class="icon-user" style="font-size: 18em;"></i>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h2> {{ entity.name }} </h2>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <i class="icon-phone"></i>
+                                    {{ entity.phone? entity.phone:'Sem telefone' }}
+                                </div>
+
+                                <div class="col-md-6">
+                                    <i class="icon-envelope"></i>
+                                    {{ entity.email? entity.email:'Sem E-mail' }}
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <i class="icon-map-marker"></i>
+                                    {% if entity.address %}
+                                        {{ entity.address }}
+
+                                        {% if entity.district %}
+                                            - {{ entity.district }}
+                                        {% endif %}
+
+                                        {% if entity.city %}
+                                            - {{ entity.city }}
+                                        {% endif %}
+
+                                    {% else %}
+                                        Sem Endereço
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <hr/>
+                                    {{ entity.comments }}
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="widget-foot">
+                    <div class="pull-left"><a href="{{ path('clients_contact_edit', { 'id': entity.id }) }}" class="btn btn-info">Editar</a> </div>
+                    <div align="right">
+                        {{ form_start(delete_form) }}
+                        {{ form_widget(delete_form.submit, {'label': 'Deletar', 'attr': {'class': 'btn btn-danger', 'onclick': 'deleteClient(this.form); return false;'}}) }}
+                        {{ form_end(delete_form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% if entity.company %}
+            <div class="col-md-6">
+                <div class="widget">
+                    <div class="widget-head">
+                        <div class="pull-left">Empresa</div>
+                        <div class="widget-icons pull-right">
+                            {#<a href="#" class="wminimize"><i class="icon-chevron-up"></i></a>#}
+                            {#<a href="#" class="wclose"><i class="icon-remove"></i></a>#}
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <div class="widget-content padd">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <i class="icon-building" style="font-size: 18em;"></i>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h2> <a href="{{ path('clients_company_show', { 'id': entity.company.id }) }}">{{ entity.company.name }}</a> </h2>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <i class="icon-phone"></i>
+                                        {{ entity.company.phone? entity.company.phone:'Sem telefone' }}
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <i class="icon-envelope"></i>
+                                        {{ entity.company.email? entity.company.email:'Sem E-mail' }}
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <i class="icon-map-marker"></i>
+                                        {% if entity.company.address %}
+                                            {{ entity.company.address }}
+
+                                            {% if entity.company.district %}
+                                                - {{ entity.company.district }}
+                                            {% endif %}
+
+                                            {% if entity.company.city %}
+                                                - {{ entity.company.city }}
+                                            {% endif %}
+
+                                        {% else %}
+                                            Sem Endereço
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <i class="icon-link"></i>
+                                        {{ entity.company.website? entity.company.website:'Sem website' }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="widget-foot">
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+    </div>
+{% endblock %}
+
+{% block extrajs %}
+    <script type="application/javascript">
+        var deleteClient = function(form) {
+            var confirmar = confirm("Deseja deletar o Contato: {{ entity.name }}.");
+
+            if (confirmar) {
+                form.submit();
+
+                return true;
+            }
+
+            return false;
+        }
+    </script>
+{% endblock %}

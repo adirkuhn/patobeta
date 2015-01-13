@@ -19,6 +19,10 @@ class AppKernel extends Kernel
 
             //patobeta bundles
             new AdirKuhn\PatoCoreBundle\PatoCoreBundle(),
+            new AdirKuhn\ClientsBundle\ClientsBundle(),
+
+            //third part bundles
+            new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

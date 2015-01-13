@@ -1,0 +1,30 @@
+clients_contact:
+    path:     /
+    defaults: { _controller: "ClientsBundle:Contact:index" }
+
+clients_contact_show:
+    path:     /{id}/show
+    defaults: { _controller: "ClientsBundle:Contact:show" }
+
+clients_contact_new:
+    path:     /new
+    defaults: { _controller: "ClientsBundle:Contact:new" }
+
+clients_contact_create:
+    path:     /create
+    defaults: { _controller: "ClientsBundle:Contact:create" }
+    requirements: { _method: post }
+
+clients_contact_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "ClientsBundle:Contact:edit" }
+
+clients_contact_update:
+    path:     /{id}/update
+    defaults: { _controller: "ClientsBundle:Contact:update" }
+    requirements: { _method: post|put }
+
+clients_contact_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "ClientsBundle:Contact:delete" }
+    requirements: { _method: post|delete }
