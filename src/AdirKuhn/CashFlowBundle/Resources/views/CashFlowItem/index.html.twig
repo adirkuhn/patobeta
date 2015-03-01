@@ -1,0 +1,170 @@
+{% extends 'PatoCoreBundle:Default:base.html.twig' %}
+
+{% block mainbar_icon %}icon-money{% endblock %}
+{% block mainbar_title %}Caixa{% endblock %}
+
+{% block mainbar_breadcrumb %}
+    <a href="{{ path('pato_core_homepage') }}"><i class="icon-home"></i> Inicio</a> /
+    Caixa /
+    Fluxo de caixa
+
+{% endblock %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-md-3">
+            <a href="{{ path('cashflowitem_new', { type: 0 }) }}" class="btn-lg btn-primary">Adicionar nova Entrada</a>
+            <br/><br/>
+        </div>
+        <div class="col-md-3">
+            <a href="{{ path('cashflowitem_new', { type: 1 }) }}" class="btn-lg btn-danger">Adicionar nova Saída</a>
+            <br/><br/>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-2">
+            <div class="widget">
+                <div class="widget-head">
+                    <div class="pull-left">Ano</div>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="widget-content padd">
+                    <form name="yearAccounts" action="" method="post">
+                        <select name="selectedYear" class="form-control" onchange="changeUrlSelectYear(this.value)">
+                            {% for year in yearsWithAccounts %}
+                                <option value="{{ year.year }}"  {% if dates.selectedYear == year.year %} selected="selected" {% endif %}>{{ year.year }}</option>
+                            {% endfor %}
+                        </select>
+                    </form>
+                </div>
+
+                <div class="widget-foot">
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-md-10">
+            <div class="widget">
+                <div class="widget-head">
+                    <div class="pull-left">Mês</div>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="widget-content padd">
+                    <form name="monthAccounts" action="" method="post">
+                        <input type="hidden" name="selectedYear" value="{{ dates.selectedYear }}" />
+                        <input type="hidden" name="selectedMonth" />
+                        <ul class="nav nav-pills">
+                            {% for m in 1..12 %}
+                                <li class="dropdown dropdown-big {% if dates.selectedMonth == date('2014-' ~ m ~ '-01')|date('m') %} borda open {% endif %}">
+                                    {#old submit $('form input[name=selectedMonth]').val({{ m }}); $(this).closest('form').submit();#}
+                                    <a class="dropdown-toggle" style="border-color: #080808; cursor: pointer;" onclick="changeUrlSelectMonth({{ m }})">{{ date('2014-' ~ m ~ '-01')|date('M')|trans|slice(0,3)  }}</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </form>
+                </div>
+
+                <div class="widget-foot">
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    {#status#}
+    <div class="row">
+        <div class="col-md-12 center">
+            <ul class="today-datas">
+                <li>
+                    <div class="text-danger"><h4>Balanço parcial do mês de {{ ('2014-' ~ dates.selectedMonth ~ '-01')|date('F')|trans }}</h4></div>
+                    <div class="datas-text"><h4 {% if (balance.MonthBalance > 0) %} class="text-primary" {% else %} class="text-danger" {% endif %}>{{ balance.MonthBalance|localizedcurrency("BRL") }}</h4></div>
+                </li>
+                <li>
+                    <div class="text-danger"><h4>Balanço parcial do ano de {{ dates.selectedYear }}:</h4></div>
+                    <div class="datas-text"><h4 {% if (balance.YearBalance > 0) %} class="text-primary" {% else %} class="text-danger" {% endif %}>{{ balance.YearBalance|localizedcurrency("BRL") }}</h4></div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="widget">
+                <div class="widget-head">
+                    <div class="pull-left">Contas a receber</div>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="widget-content">
+                    <table class="table table-striped table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>Descrição</th>
+                                <th>Data</th>
+                                <th>Valor</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for entity in pagination %}
+                            <tr {% if (entity.type == 0) %} class="text-primary" {% elseif (entity.type == 1) %} class="text-danger" {% endif %}>
+                                <td>
+                                    {% if (entity.type == 0 and entity.accountType == "accounts") %}
+                                        Contas a receber #{{ entity.id }}
+                                    {% elseif (entity.type == 1 and entity.accountType == "accounts") %}
+                                        Contas a pagar #{{ entity.id }}
+                                    {% else %}
+                                        {{ entity.description }}
+                                    {% endif %}
+                                </td>
+                                <td>{% if entity.paidAt %}{{ entity.paidAt|date('d/m/Y') }}{% endif %}</td>
+                                <td>{{ entity.value|localizedcurrency("BRL") }}</td>
+                                <td>
+                                    <ul class="nav nav-pills">
+                                        <li>
+                                            {% if entity.accountType == "cashflowitem" %} {#CAIXA#}
+                                                <a href="{{ path('cashflowitem_edit', { 'id': entity.id }) }}"><i class="icon-pencil"></i> Editar</a>
+                                            {% else %}
+                                                {% if entity.type == 0 %} {#CONTA A RECEBER#}
+                                                    <a href="{{ path('cashflow_accounts_receivable_edit', { 'id': entity.id }) }}"><i class="icon-pencil"></i> Editar</a>
+                                                {% else %}{#CONTA A PAGAR#}
+                                                    <a href="{{ path('cashflow_accounts_payable_edit', { 'id': entity.id }) }}"><i class="icon-pencil"></i> Editar</a>
+                                                {% endif %}
+                                            {% endif %}
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="widget-foot">
+                    {{ knp_pagination_render(pagination) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extrajs %}
+    <script type="application/javascript">
+        function changeUrlSelectYear(year) {
+            window.location.href = "{{ path('cashflowitem') }}" + year;
+        }
+
+        function changeUrlSelectMonth(month) {
+            window.location.href = "{{ path('cashflowitem') }}" + "{{ dates.selectedYear }}" + "/" + month
+        }
+    </script>
+{% endblock %}

@@ -1,0 +1,15 @@
+cash_flow_cashflow:
+    resource: "@CashFlowBundle/Resources/config/routing/cashflowitem.yml"
+    prefix:   /cashflow
+
+cashflow_accounts_receivable:
+    resource: "@CashFlowBundle/Resources/config/routing/accountsReceivable.yml"
+    prefix:   /accounts/receivable
+
+cashflow_accounts_payable:
+    resource: "@CashFlowBundle/Resources/config/routing/accountsPayable.yml"
+    prefix:   /accounts/payable
+
+cashflow_homepage:
+    path:     /
+    defaults: { _controller: CashFlowBundle:Default:index }

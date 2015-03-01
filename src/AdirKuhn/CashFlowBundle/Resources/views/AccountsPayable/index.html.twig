@@ -1,0 +1,212 @@
+{% extends 'PatoCoreBundle:Default:base.html.twig' %}
+
+{% block mainbar_icon %}icon-double-angle-right{% endblock %}
+{% block mainbar_title %}Contas a pagar{% endblock %}
+
+{% block mainbar_breadcrumb %}
+    <a href="{{ path('pato_core_homepage') }}"><i class="icon-home"></i> Inicio</a> /
+    Caixa /
+    Contas a pagar
+
+{% endblock %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-md-12">
+            <a href="{{ path('cashflow_accounts_payable_new') }}" class="btn-lg btn-primary">Adicionar nova conta a pagar</a>
+            <br/><br/>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-2">
+            <div class="widget">
+                <div class="widget-head">
+                    <div class="pull-left">Ano</div>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="widget-content padd">
+                    <form name="yearAccounts" action="" method="post">
+                        <select name="selectedYear" class="form-control" onchange="changeUrlSelectYear(this.value)">
+                            {% for year in yearsWithAccounts %}
+                                <option value="{{ year.year }}"  {% if dates.selectedYear == year.year %} selected="selected" {% endif %}>{{ year.year }}</option>
+                            {% endfor %}
+                        </select>
+                    </form>
+                </div>
+
+                <div class="widget-foot">
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-md-10">
+            <div class="widget">
+                <div class="widget-head">
+                    <div class="pull-left">Mês</div>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="widget-content padd">
+                    <form name="monthAccounts" action="" method="post">
+                        <input type="hidden" name="selectedYear" value="{{ dates.selectedYear }}" />
+                        <input type="hidden" name="selectedMonth" />
+                        <ul class="nav nav-pills">
+                            {% for m in 1..12 %}
+                                <li class="dropdown dropdown-big {% if dates.selectedMonth == date('2014-' ~ m ~ '-01')|date('m') %} borda open {% endif %}">
+                                    {#old submit $('form input[name=selectedMonth]').val({{ m }}); $(this).closest('form').submit();#}
+                                    <a class="dropdown-toggle" style="border-color: #080808; cursor: pointer;" onclick="changeUrlSelectMonth({{ m }})">{{ date('2014-' ~ m ~ '-01')|date('M')|trans|slice(0,3)  }}</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </form>
+                </div>
+
+                <div class="widget-foot">
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    {#status#}
+    <div class="row">
+        <div class="col-md-12 center">
+            <ul class="today-datas">
+                <li>
+                    <div><h4 class="text-danger">Total de contas a pagar vencidas:</h4></div>
+                    <div class="datas-text"><h4 class="text-danger">R$ {{ overdueAccounts.sum }}</h4></div>
+                </li>
+                <li>
+                    <div class="text-danger"><h4>Total de contas a pagar do mês de {{ ('2014-' ~ dates.selectedMonth ~ '-01')|date('F')|trans }}</h4></div>
+                    <div class="datas-text"><h4>R$ {{ sumAccountsSelectedMonth }}</h4></div>
+                </li>
+                <li>
+                    <div class="text-danger"><h4>Total de contas a pagar do ano de {{ dates.selectedYear }}:</h4></div>
+                    <div class="datas-text"><h4>R$ {{ sumAccountsSelectedYear }}</h4></div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    {# contas vencidas #}
+    {% if overdueAccounts.entities != null %}
+        <div class="row">
+            <div class="col-md-12">
+
+                <div class="widget text-danger">
+                    <div class="widget-head">
+                        <div class="pull-left text-danger">Contas vencidas</div>
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <div class="widget-content">
+                        <table class="table table-striped table-bordered table-hover text-danger">
+                            <thead>
+                            <tr>
+                                <th>Empresa</th>
+                                <th>Descrição</th>
+                                <th>Vencimento</th>
+                                <th>Valor</th>
+                                <th>Status</th>
+                                <th>Ações</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for entity in overdueAccounts.entities %}
+                                <tr>
+                                    <td>{{ entity.company? entity.company.name: '~' }}</td>
+                                    <td>{{ entity.description }}</td>
+                                    <td>{% if entity.dueDate %}{{ entity.dueDate|date('d/m/Y') }}{% endif %}</td>
+                                    <td>{{ entity.value|localizedcurrency("BRL") }}</td>
+                                    <td>{% if entity.status == 0 %} <span class="label label-info">PAGO</span> {% else %} <span class="label label-danger">Pagamento Pendente</span>{% endif %} </td>
+                                    <td>
+                                        <ul class="nav nav-pills">
+                                            <li>
+                                                <a href="{{ path('cashflow_accounts_payable_edit', { 'id': entity.id }) }}"><i class="icon-pencil"></i> Editar</a>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="widget-foot">
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    {% endif %}
+
+    {# contas mes e ano atual #}
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="widget">
+                <div class="widget-head">
+                    <div class="pull-left">Contas a pagar</div>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="widget-content">
+                    <table class="table table-striped table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th>Empresa</th>
+                            <th>Descrição</th>
+                            <th>Vencimento</th>
+                            <th>Valor</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for entity in pagination %}
+                            <tr>
+                                <td>{{ entity.company? entity.company.name: '~' }}</td>
+                                <td>{{ entity.description }}</td>
+                                <td>{% if entity.dueDate %}{{ entity.dueDate|date('d/m/Y') }}{% endif %}</td>
+                                <td>{{ entity.value|localizedcurrency("BRL") }}</td>
+                                <td>{% if entity.status == 0 %} <span class="label label-info">PAGO</span> {% else %} <span class="label label-danger">Pagamento Pendente</span>{% endif %} </td>
+                                <td>
+                                    <ul class="nav nav-pills">
+                                        <li>
+                                            <a href="{{ path('cashflow_accounts_payable_edit', { 'id': entity.id }) }}"><i class="icon-pencil"></i> Editar</a>
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="widget-foot">
+                    {{ knp_pagination_render(pagination) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extrajs %}
+    <script type="application/javascript">
+        function changeUrlSelectYear(year) {
+            window.location.href = "{{ path('cashflow_accounts_payable_home') }}" + year;
+        }
+
+        function changeUrlSelectMonth(month) {
+            window.location.href = "{{ path('cashflow_accounts_payable_home') }}" + "{{ dates.selectedYear }}" + "/" + month
+        }
+    </script>
+{% endblock %}

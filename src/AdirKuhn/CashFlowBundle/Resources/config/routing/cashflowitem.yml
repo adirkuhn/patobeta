@@ -1,0 +1,38 @@
+cashflowitem:
+    path:     /
+    defaults: { _controller: "CashFlowBundle:CashFlowItem:index", selectedMonth: 0, selectedYear: 0 }
+cashflowitem_2:
+    path:     /{selectedYear}/{selectedMonth}
+    defaults: { _controller: "CashFlowBundle:CashFlowItem:index", selectedMonth: 0, selectedYear: 0 }
+    requirements:
+        selectedYear: \d+
+        selectedMonth: \d+
+
+cashflowitem_show:
+    path:     /{id}/show
+    defaults: { _controller: "CashFlowBundle:CashFlowItem:show" }
+
+cashflowitem_new:
+    path:     /new/{type}
+    defaults: { _controller: "CashFlowBundle:CashFlowItem:new" }
+    requirements:
+        type: \d+
+
+cashflowitem_create:
+    path:     /create
+    defaults: { _controller: "CashFlowBundle:CashFlowItem:create" }
+    requirements: { _method: post }
+
+cashflowitem_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "CashFlowBundle:CashFlowItem:edit" }
+
+cashflowitem_update:
+    path:     /{id}/update
+    defaults: { _controller: "CashFlowBundle:CashFlowItem:update" }
+    requirements: { _method: post|put }
+
+cashflowitem_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "CashFlowBundle:CashFlowItem:delete" }
+    requirements: { _method: post|delete }

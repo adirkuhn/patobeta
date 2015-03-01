@@ -1,0 +1,61 @@
+{% extends 'PatoCoreBundle:Default:base.html.twig' %}
+
+{% block mainbar_icon %}icon-money{% endblock %}
+{% block mainbar_title %}Nova Entrada de caixa{% endblock %}
+
+{% block mainbar_breadcrumb %}
+    <a href="{{ path('pato_core_homepage') }}"><i class="icon-home"></i> Inicio</a> /
+    Caixa /
+    <a href="{{ path('cashflowitem') }}"> Fluxo de Caixa </a> /
+    Nova entrada de caixa
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-lg-12">
+            <a href="#" onclick="history.go(-1)" class="btn-lg btn-danger"><i class="icon-chevron-left"></i> Cancelar</a>
+            <br/><br/>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="widget">
+                {{ form_start(form) }}
+                <div class="widget-head">
+                    <div class="pull-left">Nova entrada de caixa</div>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="widget-content padd">
+
+                    {% if not form.vars.valid %}
+                        <div class="panel-danger text-danger alert alert-danger">
+                            {{ form_errors(form) }}
+                        </div>
+                    {% endif %}
+
+
+                    {% for child in form.children %}
+                        {% if (child.vars.name != "_token" and child.vars.name != "submit") %}
+                            <div class="form-group">
+                                <div class="row">
+                                    {{ form_label(child, null, {'label_attr': {'class': 'col-lg-2 control-label'}}) }}
+                                    <div class="col-lg-10">
+                                        {{ form_widget(child, {'attr': {'class': 'form-control'}}) }}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+
+                <div class="widget-foot">
+                    {{ form_widget(form.submit, {'label': 'Salvar', 'attr': {'class': 'btn btn-success'}}) }}
+                </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

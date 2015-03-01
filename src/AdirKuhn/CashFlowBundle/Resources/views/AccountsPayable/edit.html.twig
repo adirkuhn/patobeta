@@ -1,0 +1,76 @@
+{% extends 'PatoCoreBundle:Default:base.html.twig' %}
+
+{% block mainbar_icon %}icon-double-angle-right{% endblock %}
+{% block mainbar_title %}Contas a pagar{% endblock %}
+
+{% block mainbar_breadcrumb %}
+    <a href="{{ path('pato_core_homepage') }}"><i class="icon-home"></i> Inicio</a> /
+    Caixa /
+    Contas a pagar
+
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="widget">
+                {{ form_start(edit_form) }}
+                    <div class="widget-head">
+                        <div class="pull-left">Contas a pagar</div>
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <div class="widget-content padd">
+
+                        {% if not edit_form.vars.valid %}
+                            <div class="panel-danger text-danger alert alert-danger">
+                                {{ form_errors(edit_form) }}
+                            </div>
+                        {% endif %}
+
+
+                        {% for child in edit_form.children %}
+                            {% if (child.vars.name != "_token" and child.vars.name != "submit") %}
+                                <div class="form-group">
+                                    <div class="row">
+                                        {{ form_label(child, null, {'label_attr': {'class': 'col-lg-2 control-label'}}) }}
+                                        <div class="col-lg-10">
+                                            {{ form_widget(child, {'attr': {'class': 'form-control'}}) }}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+
+                    </div>
+
+                    <div class="widget-foot">
+                        <div class="pull-left">
+                            {{ form_widget(edit_form.submit, {'label': 'Salvar', 'attr': {'class': 'btn btn-success'}}) }}
+                        </div>
+                        <div class="pull-right">
+                            {% if referer is defined and referer != null %}
+                                <a href="{{ referer }}" class="btn btn-danger">Voltar</a>
+                            {% else %}
+                                <a href="{{ path('cashflow_accounts_payable_home') }}" class="btn btn-danger">Voltar</a>
+                            {% endif %}
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                {{ form_end(edit_form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extrajs %}
+    <script type="text/javascript">
+
+        {% if successUpdated is defined and successUpdated == true %}
+
+            noty({text: '<strong>Dados atualizados.</strong>',layout:'topRight',type:'information',timeout:2000});
+
+        {% endif %}
+    </script>
+{% endblock %}

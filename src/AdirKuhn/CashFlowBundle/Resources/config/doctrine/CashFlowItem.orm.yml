@@ -1,0 +1,40 @@
+AdirKuhn\CashFlowBundle\Entity\CashFlowItem:
+    type: entity
+    table: null
+    repositoryClass: AdirKuhn\CashFlowBundle\Entity\CashFlowItemRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        type:
+            type: smallint
+            options:
+                comment: '{0: entrada, 1: saida}'
+        status:
+            type: smallint
+            options:
+                comment: '{0: pago, 1: pendente de pagamento}'
+        description:
+            type: string
+            length: 255
+        createdAt:
+            type: datetime
+        paidAt:
+            type: date
+            nullable: true
+        dueDate:
+            type: date
+        value:
+            type: decimal
+            scale: 2
+
+    manyToOne:
+        company:
+            targetEntity: AdirKuhn\ClientsBundle\Entity\Company
+            joinColumn:
+                name: company_id
+                referencedColumnName: id
+    lifecycleCallbacks: {  }

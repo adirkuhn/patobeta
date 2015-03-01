@@ -1,0 +1,36 @@
+cashflow_accounts_payable_home:
+    path:     /
+    defaults: { _controller: "CashFlowBundle:AccountsPayable:index", selectedMonth: 0, selectedYear:0 }
+cashflow_accounts_payable_home_2:
+    path:     /{selectedYear}/{selectedMonth}
+    defaults: { _controller: "CashFlowBundle:AccountsPayable:index", selectedMonth: 0, selectedYear:0 }
+    requirements:
+        selectedYear: \d+
+        selectedMonth: \d+
+
+cashflow_accounts_payable_show:
+    path:     /{id}/show
+    defaults: { _controller: "CashFlowBundle:AccountsPayable:show" }
+
+cashflow_accounts_payable_new:
+    path:     /new
+    defaults: { _controller: "CashFlowBundle:AccountsPayable:new" }
+
+cashflow_accounts_payable_create:
+    path:     /create
+    defaults: { _controller: "CashFlowBundle:AccountsPayable:create" }
+    requirements: { _method: post }
+
+cashflow_accounts_payable_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "CashFlowBundle:AccountsPayable:edit" }
+
+cashflow_accounts_payable_update:
+    path:     /{id}/update
+    defaults: { _controller: "CashFlowBundle:AccountsPayable:update" }
+    requirements: { _method: post|put }
+
+cashflow_accounts_payable_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "CashFlowBundle:AccountsPayable:delete" }
+    requirements: { _method: post|delete }

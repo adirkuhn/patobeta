@@ -1,0 +1,64 @@
+{% extends 'PatoCoreBundle:Default:base.html.twig' %}
+
+{% block mainbar_icon %}icon-double-angle-left{% endblock %}
+{% block mainbar_title %}Contas a receber{% endblock %}
+
+{% block mainbar_breadcrumb %}
+    <a href="{{ path('pato_core_homepage') }}"><i class="icon-home"></i> Inicio</a> /
+    Caixa /
+    Contas a receber
+
+{% endblock %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="widget">
+                <div class="widget-head">
+                    <div class="pull-left">Contas a receber #{{ entity.id }}</div>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="widget-content padd">
+                    <table class="record_properties">
+                        <tbody>
+                        <tr>
+                            <th>Id</th>
+                            <td>{{ entity.id }}</td>
+                        </tr>
+                        <tr>
+                            <th>Status</th>
+                            <td>{{ entity.status == 0? "Pago":"Pagamento Pendente" }}</td>
+                        </tr>
+                        <tr>
+                            <th>Descrição</th>
+                            <td>{{ entity.description }}</td>
+                        </tr>
+                        <tr>
+                            <th>Vencimento</th>
+                            <td>{{ entity.dueDate|date('d/m/Y') }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="widget-foot">
+                    <div>
+                        <div class="pull-left">
+                            <a href="{{ path('cashflow_accounts_receivable_edit', { 'id': entity.id }) }}" class="btn btn-info">Editar</a>
+                        </div>
+                        <div class="pull-right">
+                            {{ form_start(delete_form) }}
+                            {{ form_start(delete_form) }}
+                            {{ form_widget(delete_form.submit, {'label': 'Deletar', 'attr': {'class': 'btn btn-danger', 'onclick': 'deleteClient(this.form); return false;'}}) }}
+                            {{ form_end(delete_form) }}
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
