@@ -12,6 +12,12 @@ pato_core_login_check:
 pato_core_logout:
     path: /logout
 
+pato_core_search:
+    path: /search
+    defaults: { _controller: PatoCoreBunlde:Search:search }
+    requirements: { _method: post }
+
+
 pato_core_config:
     resource: "@PatoCoreBundle/Resources/config/routing/config.yml"
     prefix: /config

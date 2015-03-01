@@ -1,3 +1,7 @@
+cash_flow:
+    resource: "@CashFlowBundle/Resources/config/routing.yml"
+    prefix:   /cashflow
+
 clients:
     resource: "@ClientsBundle/Resources/config/routing.yml"
     prefix:   /clients

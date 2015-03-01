@@ -21,6 +21,10 @@ class ContactController extends Controller
      */
     public function indexAction(Request $request)
     {
+        if (false === $this->get('security.authorization_checker')->isGranted(array('ROLE_ADMIN', 'ROLE_CLIENTSBUNDLE_READ'))) {
+            throw $this->createAccessDeniedException();
+        }
+
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('ClientsBundle:Contact')->findAll();
@@ -42,6 +46,10 @@ class ContactController extends Controller
      */
     public function createAction(Request $request)
     {
+        if (false === $this->get('security.authorization_checker')->isGranted(array('ROLE_ADMIN', 'ROLE_CLIENTSBUNDLE_WRITE'))) {
+            throw $this->createAccessDeniedException();
+        }
+
         $entity = new Contact();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
@@ -85,6 +93,10 @@ class ContactController extends Controller
      */
     public function newAction()
     {
+        if (false === $this->get('security.authorization_checker')->isGranted(array('ROLE_ADMIN', 'ROLE_CLIENTSBUNDLE_WRITE'))) {
+            throw $this->createAccessDeniedException();
+        }
+
         $entity = new Contact();
         $form   = $this->createCreateForm($entity);
 
@@ -100,6 +112,10 @@ class ContactController extends Controller
      */
     public function showAction($id)
     {
+        if (false === $this->get('security.authorization_checker')->isGranted(array('ROLE_ADMIN', 'ROLE_CLIENTSBUNDLE_READ'))) {
+            throw $this->createAccessDeniedException();
+        }
+
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('ClientsBundle:Contact')->find($id);
@@ -122,6 +138,10 @@ class ContactController extends Controller
      */
     public function editAction($id)
     {
+        if (false === $this->get('security.authorization_checker')->isGranted(array('ROLE_ADMIN', 'ROLE_CLIENTSBUNDLE_UPDATE'))) {
+            throw $this->createAccessDeniedException();
+        }
+
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('ClientsBundle:Contact')->find($id);
@@ -164,6 +184,10 @@ class ContactController extends Controller
      */
     public function updateAction(Request $request, $id)
     {
+        if (false === $this->get('security.authorization_checker')->isGranted(array('ROLE_ADMIN', 'ROLE_CLIENTSBUNDLE_UPDATE'))) {
+            throw $this->createAccessDeniedException();
+        }
+
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('ClientsBundle:Contact')->find($id);
@@ -197,6 +221,10 @@ class ContactController extends Controller
      */
     public function deleteAction(Request $request, $id)
     {
+        if (false === $this->get('security.authorization_checker')->isGranted(array('ROLE_ADMIN', 'ROLE_CLIENTSBUNDLE_DELETE'))) {
+            throw $this->createAccessDeniedException();
+        }
+
         $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
 

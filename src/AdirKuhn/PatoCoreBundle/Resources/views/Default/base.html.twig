@@ -42,11 +42,11 @@
             <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
 
                 <!-- Search form -->
-                {#<form class="navbar-form navbar-left" role="search" style="width: 50%">#}
-                    {#<div class="form-group" style="width: 100%">#}
-                        {#<input type="text" class="form-control" placeholder="Buscar clientes">#}
-                    {#</div>#}
-                {#</form>#}
+                <form class="navbar-form navbar-left" role="search" style="width: 50%" method="post" action="{{  }}">
+                    <div class="form-group" style="width: 100%">
+                        <input type="text" class="form-control" placeholder="Buscar clientes">
+                    </div>
+                </form>
                 <!-- Links -->
                 <ul class="nav navbar-nav pull-right">
                     <li class="dropdown pull-right {% if 'config' in app.request.get('_route') %} open {% endif %}">
@@ -294,6 +294,15 @@
                         <li {% if  'contact' in app.request.get('_route') %} class="open bblue" {% endif %}><a href="{{ path('clients_contact') }}"><i class="icon-male"></i>Contatos</a></li>
                     </ul>
                 </li>
+                <li class="dropdown dropdown-big">
+                    <a {% if  'cashflow' in app.request.get('_route') %} class="open subdrop" {% endif %}><i class="icon-dollar"></i> Caixa</a>
+                    <ul {% if  'cashflow' in app.request.get('_route') %} style="display: block;" {% endif %}>
+                        <li {% if  'payable' in app.request.get('_route') %} class="open bblue" {% endif %}><a href="{{ path('cashflow_accounts_payable_home') }}"><i class="icon-double-angle-right"></i>Contas a pagar</a></li>
+                        <li {% if  'receivable' in app.request.get('_route') %} class="open bblue" {% endif %}><a href="{{ path('cashflow_accounts_receivable_home') }}"><i class="icon-double-angle-left"></i>Contas a receber</a></li>
+                        <li {% if  'cashflowitem' in app.request.get('_route') %} class="open bblue" {% endif %}><a href="{{ path('cashflowitem') }}"><i class="icon-money"></i>Caixa</a></li>
+                    </ul>
+                </li>
+
             </ul>
         </div>
 

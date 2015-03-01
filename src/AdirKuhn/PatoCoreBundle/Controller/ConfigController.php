@@ -12,6 +12,10 @@ class ConfigController extends Controller
      */
     public function indexAction()
     {
+        if (false === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+            throw $this->createAccessDeniedException();
+        }
+
         return $this->render('PatoCoreBundle:Config:index.html.twig');
     }
 }

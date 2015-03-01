@@ -23,6 +23,7 @@ class AppKernel extends Kernel
 
             //third part bundles
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
+            new AdirKuhn\CashFlowBundle\CashFlowBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

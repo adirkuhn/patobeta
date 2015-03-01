@@ -22,6 +22,10 @@ class RolesController extends Controller
      */
     public function protectResourcesAction(Request $request, $userId)
     {
+        if (false === $this->get('security.authorization_checker')->isGranted(array('ROLE_ADMIN'))) {
+            throw $this->createAccessDeniedException();
+        }
+
         if ($userId == 0) {
             throw new ResourceNotFoundException();
         }

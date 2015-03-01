@@ -21,6 +21,10 @@ class UserController extends Controller
      */
     public function indexAction()
     {
+        if (false === $this->get('security.authorization_checker')->isGranted(array('ROLE_ADMIN', 'ROLE_PATOCOREBUNDLE_READ'))) {
+            throw $this->createAccessDeniedException();
+        }
+
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('PatoCoreBundle:User')->findAll();
@@ -35,6 +39,10 @@ class UserController extends Controller
      */
     public function createAction(Request $request)
     {
+        if (false === $this->get('security.authorization_checker')->isGranted(array('ROLE_ADMIN', 'ROLE_PATOCOREBUNDLE_WRITE'))) {
+            throw $this->createAccessDeniedException();
+        }
+
         $entity = new User();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
@@ -85,6 +93,10 @@ class UserController extends Controller
      */
     public function newAction()
     {
+        if (false === $this->get('security.authorization_checker')->isGranted(array('ROLE_ADMIN', 'ROLE_PATOCOREBUNDLE_WRITE'))) {
+            throw $this->createAccessDeniedException();
+        }
+
         $entity = new User();
         $form   = $this->createCreateForm($entity);
 
@@ -100,6 +112,10 @@ class UserController extends Controller
      */
     public function showAction($id)
     {
+        if (false === $this->get('security.authorization_checker')->isGranted(array('ROLE_ADMIN', 'ROLE_PATOCOREBUNDLE_READ'))) {
+            throw $this->createAccessDeniedException();
+        }
+
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('PatoCoreBundle:User')->find($id);
@@ -122,6 +138,10 @@ class UserController extends Controller
      */
     public function editAction($id)
     {
+        if (false === $this->get('security.authorization_checker')->isGranted(array('ROLE_ADMIN', 'ROLE_PATOCOREBUNDLE_UPDATE'))) {
+            throw $this->createAccessDeniedException();
+        }
+
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('PatoCoreBundle:User')->find($id);
@@ -178,6 +198,10 @@ class UserController extends Controller
      */
     public function updateAction(Request $request, $id)
     {
+        if (false === $this->get('security.authorization_checker')->isGranted(array('ROLE_ADMIN', 'ROLE_PATOCOREBUNDLE_UPDATE'))) {
+            throw $this->createAccessDeniedException();
+        }
+
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('PatoCoreBundle:User')->find($id);
@@ -221,6 +245,10 @@ class UserController extends Controller
      */
     public function deleteAction(Request $request, $id)
     {
+        if (false === $this->get('security.authorization_checker')->isGranted(array('ROLE_ADMIN', 'ROLE_PATOCOREBUNDLE_DELETE'))) {
+            throw $this->createAccessDeniedException();
+        }
+
         $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
 

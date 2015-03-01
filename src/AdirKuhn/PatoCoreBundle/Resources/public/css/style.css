@@ -1752,3 +1752,8 @@ footer .copy{
 .btn-big {
 	font-size: 20px !important;
 }
+
+.borda {
+	border: 1px solid rgba(45, 65, 91, 0.73);
+	border-radius: 5px;
+}
