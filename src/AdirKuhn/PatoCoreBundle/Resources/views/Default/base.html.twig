@@ -42,9 +42,9 @@
             <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
 
                 <!-- Search form -->
-                <form class="navbar-form navbar-left" role="search" style="width: 50%" method="post" action="">
+                <form class="navbar-form navbar-left" role="search" style="width: 50%" method="get" action="{{ path('pato_core_search') }}">
                     <div class="form-group" style="width: 100%">
-                        <input type="text" class="form-control" placeholder="Buscar clientes">
+                        <input type="text" name="searchText" class="form-control" placeholder="Buscar clientes">
                     </div>
                 </form>
                 <!-- Links -->

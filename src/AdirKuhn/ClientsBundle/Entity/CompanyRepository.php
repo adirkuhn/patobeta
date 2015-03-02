@@ -12,4 +12,16 @@ use Doctrine\ORM\EntityRepository;
  */
 class CompanyRepository extends EntityRepository
 {
+    public function findCompanyByName($name)
+    {
+        //Native MySQL Query
+        $dbalConn = $this->getEntityManager()->getConnection();
+
+        $query = $dbalConn->query("
+            SELECT * FROM company
+            WHERE name LIKE '%". $name ."%'
+        ");
+
+        return $query->fetchAll();
+    }
 }

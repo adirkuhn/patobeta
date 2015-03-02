@@ -12,4 +12,16 @@ use Doctrine\ORM\EntityRepository;
  */
 class ContactRepository extends EntityRepository
 {
+    public function findContactByName($name)
+    {
+        //Native MySQL Query
+        $dbalConn = $this->getEntityManager()->getConnection();
+
+        $query = $dbalConn->query("
+            SELECT * FROM contact
+            WHERE name LIKE '%". $name ."%'
+        ");
+
+        return $query->fetchAll();
+    }
 }
