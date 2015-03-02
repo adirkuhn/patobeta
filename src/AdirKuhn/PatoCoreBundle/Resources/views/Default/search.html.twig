@@ -1,0 +1,121 @@
+{% extends 'PatoCoreBundle:Default:base.html.twig' %}
+
+{% block mainbar_icon %}icon-search{% endblock %}
+{% block mainbar_title %}Busca{% endblock %}
+
+{% block mainbar_breadcrumb %}
+    <a href="{{ path('pato_core_homepage') }}"><i class="icon-home"></i> Inicio</a> /
+    Busca
+{% endblock %}
+
+{% block content %}
+    <h1>Resultados de busca</h1>
+
+    <div class="row">
+
+        {# contacts #}
+        <div class="col-md-12">
+            <div class="widget">
+                <div class="widget-head">
+                    Contatos
+                </div>
+                <div class="widget-content">
+                    <div class="row">
+                        <div class="col-md-12">
+
+                            <table class="table table-striped table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>Email</th>
+                                    <th>Telefone</th>
+                                    <th>Celular</th>
+                                    {#<th>Empresa</th>#}
+                                    <th>Ações</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for entity in contactsPagination %}
+                                    <tr>
+                                        <td>{{ entity["name"] }}</td>
+                                        <td>{{ entity["email"] }}</td>
+                                        <td>{{ entity["phone"] }}</td>
+                                        <td>{{ entity["cellphone"] }}</td>
+                                        {#<td>{{ entity["company"]? entity["company"]["name"]:'' }}</td>#}
+                                        <td>
+                                            <ul class="nav nav-pills">
+                                                <li>
+                                                    <a href="{{ path('clients_contact_show', { 'id': entity["id"] }) }}"><i class="icon-search"></i></a>
+                                                </li>
+                                                {#<li>#}
+                                                    {#<a href="{{ path('clients_contact_edit', { 'id': entity.id }) }}"><i class="icon-edit"></i></a>#}
+                                                {#</li>#}
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="widget-foot">
+                    {{ knp_pagination_render(contactsPagination) }}
+                </div>
+            </div>
+        </div>
+
+        {#companies#}
+        <div class="col-md-12">
+            <div class="widget">
+                <div class="widget-head">
+                    Empresas
+                </div>
+                <div class="widget-content">
+                    <div class="row">
+                        <div class="col-md-12">
+
+                            <table class="table table-striped table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th>Empresa</th>
+                                    <th>Email</th>
+                                    <th>Telefone</th>
+                                    <th>Endereço</th>
+                                    <th>Cidade</th>
+                                    <th>Ações</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for entity in companiesPagination %}
+                                    <tr>
+                                        <td>{{ entity["name"] }}</td>
+                                        <td>{{ entity["email"] }}</td>
+                                        <td>{{ entity["phone"] }}</td>
+                                        <td>{{ entity["address"] }}</td>
+                                        <td>{{ entity["city"] }}</td>
+                                        <td>
+                                            <ul class="nav nav-pills">
+                                                <li>
+                                                    <a href="{{ path('clients_contact_show', { 'id': entity["id"] }) }}"><i class="icon-search"></i></a>
+                                                </li>
+                                                {#<li>#}
+                                                {#<a href="{{ path('clients_contact_edit', { 'id': entity.id }) }}"><i class="icon-edit"></i></a>#}
+                                                {#</li>#}
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="widget-foot">
+                    {{ knp_pagination_render(companiesPagination) }}
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
