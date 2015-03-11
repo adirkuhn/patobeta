@@ -13,6 +13,8 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        return $this->render('PatoCoreBundle:Default:index.html.twig');
+        $entities = $this->getDoctrine()->getRepository('ClientsBundle:Contact')->findRecentContacts();
+
+        return $this->render('PatoCoreBundle:Default:index.html.twig', array('entities' => $entities));
     }
 }

@@ -1,0 +1,68 @@
+{% extends 'PatoCoreBundle:Default:base.html.twig' %}
+
+{% block mainbar_icon %}{% endblock %}
+{% block mainbar_title %}{% endblock %}
+
+{% block mainbar_breadcrumb %}
+{% endblock %}
+
+{% block sidebar %}
+{% endblock %}
+
+{% block body %}
+    {#status#}
+    {#<div class="row">#}
+        {#<div class="col-md-12 center">#}
+            {#<ul class="today-datas">#}
+                {#<li>#}
+                    {#<div class="text-danger"><h4>Balanço parcial do mês de {{ ('2014-' ~ dates.selectedMonth ~ '-01')|date('F')|trans }}</h4></div>#}
+                    {#<div class="datas-text"><h4 {% if (balance.MonthBalance > 0) %} class="text-primary" {% else %} class="text-danger" {% endif %}>{{ balance.MonthBalance|localizedcurrency("BRL") }}</h4></div>#}
+                {#</li>#}
+                {#<li>#}
+                    {#<div class="text-danger"><h4>Balanço parcial do ano de {{ dates.selectedYear }}:</h4></div>#}
+                    {#<div class="datas-text"><h4 {% if (balance.YearBalance > 0) %} class="text-primary" {% else %} class="text-danger" {% endif %}>{{ balance.YearBalance|localizedcurrency("BRL") }}</h4></div>#}
+                {#</li>#}
+            {#</ul>#}
+        {#</div>#}
+    {#</div>#}
+
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="widget text-danger">
+                <div class="widget-head">
+                    <div class="pull-left text-danger">Contas vencidas</div>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="widget-content">
+                    <table class="table table-striped table-bordered table-hover text-danger">
+                        <thead>
+                        <tr>
+                            <th>Empresa</th>
+                            <th>Descrição</th>
+                            <th>Vencimento</th>
+                            <th>Valor</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for entity in overDueAccountsReceivable %}
+                            <tr>
+                                <td>{{ entity.company? entity.company.name: '~' }}</td>
+                                <td>{{ entity.description }}</td>
+                                <td>{% if entity.dueDate %}{{ entity.dueDate|date('d/m/Y') }}{% endif %}</td>
+                                <td>{{ entity.value|localizedcurrency("BRL") }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="widget-foot">
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

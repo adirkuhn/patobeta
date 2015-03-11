@@ -2,11 +2,13 @@
 
 namespace AdirKuhn\CashFlowBundle\Controller;
 
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use AdirKuhn\CashFlowBundle\Entity\Accounts;
 use AdirKuhn\CashFlowBundle\Form\AccountsType as AccountsType;
+use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 
 /**
  * Accounts controller (receivable).
@@ -327,5 +329,34 @@ class AccountsController extends Controller
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()
         ;
+    }
+
+    /**
+     * Return account info
+     *
+     * @param int $type Type of accounts
+     * @param int $id Account Id
+     */
+    public function infoAction($id) {
+
+        $entity = $this->getDoctrine()->getManager()->getRepository('CashFlowBundle:Accounts')->find($id);
+
+        $normalizer = new GetSetMethodNormalizer();
+
+        $callback = function ($dateTime) {
+            return $dateTime instanceof \DateTime
+                ? $dateTime->format(\DateTime::ISO8601)
+                : '';
+        };
+
+        $normalizer->setCallbacks(array(
+            'createdAt' => $callback,
+            'paidAt' => $callback,
+            'dueDate' => $callback
+        ));
+
+        $return = $normalizer->normalize($entity);
+
+        return new JsonResponse($return);
     }
 }

@@ -24,4 +24,15 @@ class ContactRepository extends EntityRepository
 
         return $query->fetchAll();
     }
+
+    public function findRecentContacts()
+    {
+        return $this->getEntityManager()
+            ->createQuery("
+                SELECT c FROM ClientsBundle:Contact as c
+                ORDER BY c.id DESC
+            ")
+            ->setMaxResults(10)
+            ->getResult();
+    }
 }

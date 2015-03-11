@@ -13,3 +13,10 @@ cashflow_accounts_payable:
 cashflow_homepage:
     path:     /
     defaults: { _controller: CashFlowBundle:Default:index }
+
+cashflow_account_json_info:
+    path: /accounts/info/{type}/{id}
+    defaults: { _controller: "CashFlowBundle:Accounts:info", type:0, id:0 }
+    requirements:
+        type: \d+
+        id: \d+

@@ -1,1 +1,90 @@
 {% extends 'PatoCoreBundle:Default:base.html.twig' %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="widget">
+                <div class="widget-head">Contatos recentes</div>
+                <div class="widget-content">
+                    <table class="table table-striped table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Email</th>
+                            <th>Telefone</th>
+                            <th>Celular</th>
+                            <th>Empresa</th>
+                            <th>Ações</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for entity in entities %}
+                            <tr>
+                                <td>{{ entity.name }}</td>
+                                <td>{{ entity.email }}</td>
+                                <td>{{ entity.phone }}</td>
+                                <td>{{ entity.cellphone }}</td>
+                                <td>{{ entity.company? entity.company.name:'' }}</td>
+                                <td>
+                                    <ul class="nav nav-pills">
+                                        <li>
+                                            <a href="{{ path('clients_contact_show', { 'id': entity.id }) }}"><i class="icon-search"></i></a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ path('clients_contact_edit', { 'id': entity.id }) }}"><i class="icon-edit"></i></a>
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="widget-foot">
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block extrajs %}
+    <script type="application/javascript">
+        function notifyMe() {
+            // Let's check if the browser supports notifications
+            if (!("Notification" in window)) {
+                alert("This browser does not support desktop notification");
+            }
+
+            // Let's check if the user is okay to get some notification
+            else if (Notification.permission === "granted") {
+                // If it's okay let's create a notification
+                var notification = new Notification("Hi there!");
+            }
+
+            // Otherwise, we need to ask the user for permission
+            else if (Notification.permission !== 'denied') {
+                Notification.requestPermission(function (permission) {
+                    // If the user is okay, let's create a notification
+                    if (permission === "granted") {
+                        var notification = new Notification("Hi there!");
+                    }
+                });
+            }
+
+            // At last, if the user already denied any notification, and you
+            // want to be respectful there is no need to bother them any more.
+        }
+
+        $(document).ready(function(){
+            //var hasOverdueAccounts =
+            notifyMe();
+        });
+    </script>
+{% endblock %}
