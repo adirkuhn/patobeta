@@ -10,6 +10,7 @@
         'bundles/patocore/css/style.css'
         'bundles/patocore/css/widgets.css'
 
+        filter='uglifycss'
         filter='cssrewrite'
     %}
 
@@ -381,6 +382,7 @@
         '@PatoCoreBundle/Resources/public/js/custom.js'
 
 
+        filter='uglifyjs'
     %}
     <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
