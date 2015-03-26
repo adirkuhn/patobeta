@@ -42,9 +42,9 @@ assetic:
     filters:
         cssrewrite: ~
         uglifyjs:
-            bin: /usr/local/bin/uglifyjs
+            bin: /var/lib/openshift/5514410fe0b8cde6960001d4/php/node_modules/uglify-js/bin/uglifyjs
         uglifycss:
-            bin: /usr/local/bin/uglifycss
+            bin: /var/lib/openshift/5514410fe0b8cde6960001d4/php/node_modules/uglifycss/uglifycss
         #closure:
         #    jar: "%kernel.root_dir%/Resources/java/compiler.jar"
         #yui_css:
