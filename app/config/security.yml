@@ -4,10 +4,10 @@ security:
         Symfony\Component\Security\Core\User\User: plaintext
 
     providers:
-        main:
-            entity:
-                class: AdirKuhn\PatoCoreBundle\Entity\User
-                property: email
+        #main:
+        #    entity:
+        #        class: AdirKuhn\PatoCoreBundle\Entity\User
+        #        property: email
         in_memory:
             memory:
                 users:

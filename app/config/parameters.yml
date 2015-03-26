@@ -1,0 +1,14 @@
+# This file is auto-generated during the composer install
+parameters:
+    database_driver: pdo_mysql
+    database_host: 127.5.20.130
+    database_port: null
+    database_name: pato
+    database_user: adminfvHxCjz
+    database_password: hV-iGMXMvhnD
+    mailer_transport: smtp
+    mailer_host: 127.0.0.1
+    mailer_user: null
+    mailer_password: null
+    locale: pt_BR
+    secret: n3jfn3jn3fu3nu9fu23f3jfj3fl3mcxzmclksdc030n4q
