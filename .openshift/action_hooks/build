@@ -1,5 +1,7 @@
 cd $OPENSHIFT_REPO_DIR
 export SYMFONY_ENV=prod
+echo "Deploy produção no openshift"
+php app/console cache:clear --env=prod --no-debug
 composer dump-autoload --optimize
 php `find -name build_bootstrap.php`
 php app/console assets:install
