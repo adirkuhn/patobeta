@@ -14,20 +14,16 @@ cat app/config/parameters.yml
 php app/console doctrine:database:create
 php app/console doctrine:schema:update
 
-echo "----------------------------"
-echo "4# Limpando cache"
-echo "----------------------------"
-#php app/console cache:clear --env=prod
 
 echo "----------------------------"
 echo "5# Instalando Assets"
 echo "----------------------------"
-#php app/console assets:install
+php app/console assets:install
 
 echo "----------------------------"
 echo "6# Dumps dos Assets"
 echo "----------------------------"
-#php app/console assetic:dump --env=prod
+php app/console assetic:dump
 
 echo "----------------------------"
 echo "7# Criando autoload otimizado"
