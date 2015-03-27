@@ -18,7 +18,7 @@ class ContactRepository extends EntityRepository
         $dbalConn = $this->getEntityManager()->getConnection();
 
         $query = $dbalConn->query("
-            SELECT * FROM contact
+            SELECT * FROM Contact
             WHERE name LIKE '%". $name ."%'
         ");
 

@@ -18,7 +18,7 @@ class CompanyRepository extends EntityRepository
         $dbalConn = $this->getEntityManager()->getConnection();
 
         $query = $dbalConn->query("
-            SELECT * FROM company
+            SELECT * FROM Company
             WHERE name LIKE '%". $name ."%'
         ");
 
