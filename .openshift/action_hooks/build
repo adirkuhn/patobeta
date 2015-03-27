@@ -11,14 +11,14 @@ echo "2# Limpando cache"
 echo "----------------------------"
 php app/console cache:clear --env=prod --no-debug
 echo "----------------------------"
-echo "3# Criando autoload otimizado"
-echo "----------------------------"
-composer dump-autoload --optimize
-echo "----------------------------"
-echo "4# Instalando Assets"
+echo "3# Instalando Assets"
 echo "----------------------------"
 php app/console assets:install
 echo "----------------------------"
-echo "5# Dumps dos Assets"
+echo "4# Dumps dos Assets"
 echo "----------------------------"
 php app/console assetic:dump --env=prod --no-debug
+echo "----------------------------"
+echo "5# Criando autoload otimizado"
+echo "----------------------------"
+composer dump-autoload --optimize
