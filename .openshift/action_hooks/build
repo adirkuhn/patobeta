@@ -1,6 +1,6 @@
 cd $OPENSHIFT_REPO_DIR
 export SYMFONY_ENV=prod
-composer install --no-dev --optimize-autoloader
+composer dump-autoload --optimize
 php `find -name build_bootstrap.php`
 php app/console assets:install
 php app/console assetic:dump --env=prod --no-debug
