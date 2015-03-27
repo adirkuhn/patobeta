@@ -108,6 +108,15 @@ class AccountsPayableController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
+
+            //set paid
+            if ($entity->getStatus() == 0) {
+                $entity->setPaidAt(new \DateTime());
+            }
+            else {
+                $entity->setPaidAt(null);
+            }
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
