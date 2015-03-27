@@ -9,6 +9,7 @@ php `find -name build_bootstrap.php`
 echo "----------------------------"
 echo "3# Update schema"
 echo "----------------------------"
+php app/console doctrine:database:create
 php app/console doctrine:schema:update
 
 echo "----------------------------"
