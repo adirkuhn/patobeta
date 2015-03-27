@@ -346,7 +346,7 @@ class AccountsController extends Controller
      * @param int $type Type of accounts
      * @param int $id Account Id
      */
-    public function infoAction($id) {
+    public function infoAction($type, $id) {
 
         $entity = $this->getDoctrine()->getManager()->getRepository('CashFlowBundle:Accounts')->find($id);
 
