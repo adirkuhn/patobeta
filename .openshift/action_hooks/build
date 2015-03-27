@@ -6,26 +6,15 @@ echo "----------------------------"
 echo "1# Gerando bootstrap"
 echo "----------------------------"
 php `find -name build_bootstrap.php`
-
 echo "----------------------------"
-echo "3# Update schema"
-echo "----------------------------"
-cat app/config/parameters.yml
-php app/console doctrine:database:create
-php app/console doctrine:schema:update
-
-
-echo "----------------------------"
-echo "5# Instalando Assets"
-echo "----------------------------"
-php app/console assets:install
-
-echo "----------------------------"
-echo "6# Dumps dos Assets"
-echo "----------------------------"
-php app/console assetic:dump
-
-echo "----------------------------"
-echo "7# Criando autoload otimizado"
+echo "2# Criando autoload otimizado"
 echo "----------------------------"
 composer dump-autoload --optimize
+
+echo "###########################################"
+echo "###########################################"
+echo "###########################################"
+echo "###########################################"
+echo ""
+echo "é necessário fazer a instalação do assets e dump em modo de producao"
+echo ""
