@@ -1,5 +1,4 @@
 cd $OPENSHIFT_REPO_DIR
-export SYMFONY_ENV=prod
 echo "----------------------------"
 echo "Deploy produção no openshift"
 echo "----------------------------"
@@ -9,7 +8,7 @@ php `find -name build_bootstrap.php`
 echo "----------------------------"
 echo "2# Limpando cache"
 echo "----------------------------"
-php app/console cache:clear --env=prod --no-debug
+php app/console cache:clear --env=prod
 echo "----------------------------"
 echo "3# Instalando Assets"
 echo "----------------------------"
@@ -17,7 +16,7 @@ php app/console assets:install
 echo "----------------------------"
 echo "4# Dumps dos Assets"
 echo "----------------------------"
-php app/console assetic:dump --env=prod --no-debug
+php app/console assetic:dump --env=prod
 echo "----------------------------"
 echo "5# Criando autoload otimizado"
 echo "----------------------------"
