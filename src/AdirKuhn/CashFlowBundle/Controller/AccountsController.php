@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
+use AdirKuhn\ClientsBundle\Entity\Company;
 use AdirKuhn\CashFlowBundle\Entity\Accounts;
 use AdirKuhn\CashFlowBundle\Form\AccountsType as AccountsType;
 use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
@@ -358,10 +359,17 @@ class AccountsController extends Controller
                 : '';
         };
 
+        $callback2 = function($company) {
+            return $companny instanceof Company
+                ? $company->name
+                : '';
+        };
+
         $normalizer->setCallbacks(array(
             'createdAt' => $callback,
             'paidAt' => $callback,
-            'dueDate' => $callback
+            'dueDate' => $callback,
+            'company' => $callback2,
         ));
 
         $return = $normalizer->normalize($entity);
