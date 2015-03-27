@@ -1,3 +1,4 @@
+export SYMFONY_ENV=prod
 cd $OPENSHIFT_REPO_DIR
 echo "----------------------------"
 echo "Deploy produção no openshift"
@@ -9,6 +10,7 @@ php `find -name build_bootstrap.php`
 echo "----------------------------"
 echo "3# Update schema"
 echo "----------------------------"
+cat app/config/parameters.yml
 php app/console doctrine:database:create
 php app/console doctrine:schema:update
 
@@ -30,4 +32,4 @@ echo "----------------------------"
 echo "----------------------------"
 echo "7# Criando autoload otimizado"
 echo "----------------------------"
-#composer dump-autoload --optimize
+composer dump-autoload --optimize
