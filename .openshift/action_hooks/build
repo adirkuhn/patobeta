@@ -5,19 +5,28 @@ echo "----------------------------"
 echo "1# Gerando bootstrap"
 echo "----------------------------"
 php `find -name build_bootstrap.php`
+
 echo "----------------------------"
-echo "2# Limpando cache"
+echo "3# Update schema"
 echo "----------------------------"
-php app/console cache:clear --env=prod
+#php app/console doctrine:schema:update
+
 echo "----------------------------"
-echo "3# Instalando Assets"
+echo "4# Limpando cache"
 echo "----------------------------"
-php app/console assets:install
+#php app/console cache:clear --env=prod
+
 echo "----------------------------"
-echo "4# Dumps dos Assets"
+echo "5# Instalando Assets"
 echo "----------------------------"
-php app/console assetic:dump --env=prod
+#php app/console assets:install
+
 echo "----------------------------"
-echo "5# Criando autoload otimizado"
+echo "6# Dumps dos Assets"
 echo "----------------------------"
-composer dump-autoload --optimize
+#php app/console assetic:dump --env=prod
+
+echo "----------------------------"
+echo "7# Criando autoload otimizado"
+echo "----------------------------"
+#composer dump-autoload --optimize
