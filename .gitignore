@@ -9,6 +9,7 @@
 /vendor/
 /bin/
 /composer.phar
+composer.lock
 /.idea/*
 npm-debug.log
 Finances, Accounting & Legal English-Portuguese Glossary.pdf
