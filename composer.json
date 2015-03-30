@@ -22,7 +22,8 @@
         "twig/extensions": "~1.2.0"
     },
     "require-dev": {
-        "sensio/generator-bundle": "~2.3"
+        "sensio/generator-bundle": "~2.3",
+        "phpmd/phpmd": "dev-master"
     },
     "scripts": {
         "post-root-package-install": [
