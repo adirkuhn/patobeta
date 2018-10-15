@@ -23,4 +23,4 @@ Como o sistema é feito em symfony a instalação é simples:
  * 6# No mysql crie a VIEW 'cashflow' contida no arquivo sql.sql
 
 
-Dúvidas para adir[at]nuvem.coffee
+Dúvidas para adirkuhn[at]gmail.com
